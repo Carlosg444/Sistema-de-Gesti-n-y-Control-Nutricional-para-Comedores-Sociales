@@ -1,14 +1,17 @@
 import { Alimento } from "./alimento";
-export class CategoriaAlimento{
-    private categoria: string;
-    private alimentos: Alimento[]= [];
-    constructor (categoria: string){
-        this.categoria=categoria;
-    } 
-    public agregarAlimentos(a: Alimento): void{
+export class CategoriaAlimento {
+    private nombre: string;
+    private alimentos: Alimento[] = [];
+    constructor(nombre: string) {
+        this.nombre = nombre;
+    }
+    public agregarAlimento(a: Alimento): void {
         this.alimentos.push(a);
     }
-    public mostrarAlimentos(): void{
-        this.alimentos.forEach(a=> a.mostrarAlimento());
+    public getNombre(): string {
+        return this.nombre;
+    }
+    public getAlimentos(): Alimento[] {
+        return this.alimentos;
     }
 }

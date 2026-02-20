@@ -1,15 +1,16 @@
+import { CategoriaAlimento } from "./CategoriaAlimento";
 export class Alimento{
     private nombre: string;
-    private fechaCaducidad: string;
-    constructor (nombre:string, fechaCaducidad: string){
+    private categoria: CategoriaAlimento;
+    constructor (nombre:string, categoria: CategoriaAlimento){
         this.nombre= nombre;
-        this.fechaCaducidad= fechaCaducidad;
+        this.categoria = categoria;
     }
-    public mostrarAlimento(): void{
-        console.log(this.nombre);
+    public getNombre(): string {
+        return this.nombre;
     }
-    public mostrarCaducidad(): void{
-        console.log(this.fechaCaducidad);
+    public getCategoria(): CategoriaAlimento {
+        return this.categoria;
     }
-}
 
+}
