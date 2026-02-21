@@ -1,4 +1,4 @@
-import { Alimento } from "./alimento";
+import { Alimento } from "./Alimento";
 export class CategoriaAlimento {
     private nombre: string;
     private alimentos: Alimento[] = [];
