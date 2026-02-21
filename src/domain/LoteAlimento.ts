@@ -1,12 +1,11 @@
 import { Alimento } from "./Alimento";
-import { Fecha } from "./Fecha";
 export class LoteAlimento{
     private cantidad: number;
-    private fechaIngreso: Fecha;
-    private fechaCaducidad: Fecha;
+    private fechaIngreso: Date;
+    protected fechaCaducidad: Date;
     private numeroLote: number;
     private alimento: Alimento;
-    constructor (cantidad: number, fechaIngreso: Fecha, fechaCaducidad: Fecha, numeroLote: number, alimento:Alimento){
+    constructor (cantidad: number, fechaIngreso: Date, fechaCaducidad: Date, numeroLote: number, alimento:Alimento){
         if (numeroLote <= 0) {
             throw new Error("El número de lote debe ser mayor que 0");
         }
@@ -28,7 +27,7 @@ export class LoteAlimento{
     public getNumeroDeLote(): number{
         return this.numeroLote;
     }
-    public getFechaCaducidad(): Fecha{
+    public getFechaCaducidad(): Date{
         return this.fechaCaducidad;
     }
     public getAlimento(): Alimento{
