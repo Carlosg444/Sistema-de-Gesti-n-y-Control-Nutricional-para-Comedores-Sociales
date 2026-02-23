@@ -2,7 +2,7 @@ import { Alimento } from "./Alimento";
 export class LoteAlimento{
     private cantidad: number;
     private fechaIngreso: Date;
-    protected fechaCaducidad: Date;
+    private fechaCaducidad: Date;
     private numeroLote: number;
     private alimento: Alimento;
     constructor (cantidad: number, fechaIngreso: Date, fechaCaducidad: Date, numeroLote: number, alimento:Alimento){

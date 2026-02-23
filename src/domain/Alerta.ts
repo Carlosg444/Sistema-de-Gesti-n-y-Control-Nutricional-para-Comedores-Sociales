@@ -3,7 +3,7 @@ import { differenceInDays } from "date-fns";
 
 
 export class AlertaCaducidad {
-    public generarAlerta(lote: LoteAlimento): string {
+    public aCaducido(lote: LoteAlimento): string {
         const hoy = new Date();
         const dias = differenceInDays(lote.getFechaCaducidad(), hoy);
 
@@ -15,6 +15,18 @@ export class AlertaCaducidad {
             return "Advertencia";
         } else if (dias <= 7) {
             return "Informativo";
+        }
+        return "Sin alerta";
+    }
+    public hayStock(lote: LoteAlimento): string {
+        if (lote.getCantidad() == 0) {
+            return "No hay stock";
+        } else if (lote.getCantidad() == 1) {
+            return "Stock apunto de acabarse";
+        } else if (lote.getCantidad() <= 3) {
+            return "Stock cerca de acabarse";
+        } else if (lote.getCantidad() <= 5) {
+            return "Poco stock";
         }
         return "Sin alerta";
     }
