@@ -1,12 +1,19 @@
-import { Persona } from "./Persona";
+
 import { RolUsuario } from "./RolUsuario";
-export class Usuario extends Persona{
-    private rol: RolUsuario;
-    constructor(id: number, nombre: string, dni: string, rol: RolUsuario) {
-        super(id, nombre, dni);
-        this.rol = rol;
+export class Usuario{
+    constructor (
+        private nombre: string,
+        private dni: string,
+        private rol: RolUsuario,
+        private numero: number
+    ){}
+    public getNombre(): string{
+        return this. nombre;
     }
     public getRol(): RolUsuario {
         return this.rol;
+    }
+    public getNumero(): number{
+        return this.numero;
     }
 }

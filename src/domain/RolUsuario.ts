@@ -1,4 +1,7 @@
 export enum RolUsuario{
-    Responsable= "RESPONSABLE",
-    Voluntarios= "VOLUNTARIOS"
+    Administrador,
+    Responsable,
+    Voluntarios,
+    Proveedor,
+    Beneficiario
 }

@@ -1,17 +1,22 @@
 import { Cse } from "./Cse";
-import { Persona } from "./Persona";
-
-export class Beneficiario extends Persona{
-    private cse: Cse; 
-    private conadis: boolean;
-    constructor (id: number, nombre: string, dni: string, cse: Cse, conadis: boolean){
-        if (cse==Cse.NoPobre || conadis==false){
-            throw new Error ("Esta persona no puede ser beneficiada.")
+import { RolUsuario } from "./RolUsuario";
+import { Usuario } from "./Usuario";
+export class Beneficiario extends Usuario{
+    constructor (
+        nombre: string,
+        dni: string,
+        rol: RolUsuario,
+        numero: number,
+        private edad: number,
+        private id: string,
+        private cse: Cse
+    ){  
+        if (edad<0) throw new Error ("Edad Invalida.");
+        if (cse==Cse.NoPobre){
+            throw new Error ("Esta persona no puede ser beneficiada.");
         }
-    
-        super (id, nombre, dni);
-        this.cse= cse;
-        this.conadis= conadis;
+        super (nombre, dni, rol, numero);
     }
     
+
 }
