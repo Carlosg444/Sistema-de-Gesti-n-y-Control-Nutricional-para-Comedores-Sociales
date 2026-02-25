@@ -46,7 +46,7 @@ export class PlanNutricional{
         let protes= this.protesDiarias();
         if (this.desayuno) protes-=protes*0.3
         if (this.almuerzo) protes-=protes*0.4
-        if (this.desayuno) protes-=protes*0.3
+        if (this.cena) protes-=protes*0.3
         return protes;
     }
 }
