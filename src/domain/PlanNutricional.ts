@@ -1,7 +1,7 @@
 import { Beneficiario } from "./Beneficiario";
-export class PlanNutricional extends Beneficiario{
+export class PlanNutricional{
     constructor (
-        private beneficiario: Beneficiario;
+        private beneficiario: Beneficiario,
         private kg: number,
         private desayuno: boolean,
         private almuerzo: boolean,
