@@ -1,4 +1,3 @@
-
 import { RolUsuario } from "./RolUsuario";
 export class Usuario{
     constructor (

@@ -6,7 +6,7 @@ export class PlanNutricional extends Beneficiario{
     constructor (
         nombre: string,
         dni: string,
-        rol: RolUsuario,
+        rol: RolUsuario.Beneficiario,
         numero: number,
         edad: number,
         id: string,

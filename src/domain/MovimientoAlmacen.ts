@@ -23,4 +23,14 @@ export class MovimientoAlmacen{
     public getFecha(): Date{
         return this.fecha;
     }
+    public ejecutarMovimiento(): void{
+        if (this.tipo==TipoMovimiento.Entrada){
+            this.lote.aumentarCantidad(this.cantidad);
+        }else {
+        const exito = this.lote.disminuirCantidad(this.cantidad);
+        if (!exito) {
+            throw new Error("Stock insuficiente para realizar la salida");
+            }
+        }
+    }
 }

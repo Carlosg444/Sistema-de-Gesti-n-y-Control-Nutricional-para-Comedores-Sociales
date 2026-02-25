@@ -12,5 +12,4 @@ export class Alimento{
     public getCategoria(): CategoriaAlimento {
         return this.categoria;
     }
-
 }

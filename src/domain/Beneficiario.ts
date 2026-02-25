@@ -5,7 +5,7 @@ export class Beneficiario extends Usuario{
     constructor (
         nombre: string,
         dni: string,
-        rol: RolUsuario,
+        rol: RolUsuario.Beneficiario,
         numero: number,
         private edad: number,
         private id: string,

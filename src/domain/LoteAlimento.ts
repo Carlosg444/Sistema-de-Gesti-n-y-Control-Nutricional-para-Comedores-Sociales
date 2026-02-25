@@ -5,7 +5,8 @@ export class LoteAlimento{
     private fechaCaducidad: Date;
     private numeroLote: number;
     private alimento: Alimento;
-    constructor (cantidad: number, fechaIngreso: Date, fechaCaducidad: Date, numeroLote: number, alimento:Alimento){
+    private precioUnitario: number;
+    constructor (cantidad: number, fechaIngreso: Date, fechaCaducidad: Date, numeroLote: number, alimento:Alimento, precioUnitario: number){
         if (numeroLote <= 0) {
             throw new Error("El número de lote debe ser mayor que 0");
         }
@@ -20,6 +21,7 @@ export class LoteAlimento{
         this.fechaCaducidad= fechaCaducidad;
         this.numeroLote= numeroLote;
         this.alimento= alimento;
+        this.precioUnitario= precioUnitario;
     }
     public getCantidad(): number{
         return this.cantidad;
@@ -33,6 +35,9 @@ export class LoteAlimento{
     public getAlimento(): Alimento{
         return this.alimento;
     }
+    public getPrecioUnitario(): number{
+        return this.precioUnitario;
+    }
     public aumentarCantidad(n: number): boolean{
         if (n>0){
             this.cantidad+=n;
@@ -44,5 +49,8 @@ export class LoteAlimento{
             this.cantidad-=n;
             return true;
         } else return false;
+    }
+    public getprecioTotal(): number{
+        return this.cantidad*this.precioUnitario;
     }
 }

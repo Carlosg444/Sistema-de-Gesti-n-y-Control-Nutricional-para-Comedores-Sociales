@@ -1,12 +1,9 @@
 import { LoteAlimento } from "./LoteAlimento";
 import { differenceInDays } from "date-fns";
-
-
 export class AlertaCaducidad {
     public aCaducido(lote: LoteAlimento): string {
         const hoy = new Date();
         const dias = differenceInDays(lote.getFechaCaducidad(), hoy);
-
         if (dias <= 0) {
             return "Producto vencido";
         } else if (dias <= 1) {
