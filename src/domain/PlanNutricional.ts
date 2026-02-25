@@ -1,23 +1,12 @@
 import { Beneficiario } from "./Beneficiario";
-import { Cse } from "./Cse";
-import { RolUsuario } from "./RolUsuario";
-
 export class PlanNutricional extends Beneficiario{
     constructor (
-        nombre: string,
-        dni: string,
-        rol: RolUsuario.Beneficiario,
-        numero: number,
-        edad: number,
-        id: string,
-        cse: Cse,
+        private beneficiario: Beneficiario;
         private kg: number,
         private desayuno: boolean,
         private almuerzo: boolean,
         private cena: boolean
-    ){
-        super (nombre, dni, rol, numero, edad, id, cse);
-    }
+    ){}
     public caloriasDiarias(): number {
         if (this.kg <= 5) return 500;
         if (this.kg <= 10) return 700;

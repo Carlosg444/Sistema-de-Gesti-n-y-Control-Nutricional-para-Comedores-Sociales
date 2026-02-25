@@ -1,4 +1,4 @@
-import { LoteAlimento } from "./LoteAlimento";
+
 import { RolUsuario } from "./RolUsuario";
 import { Usuario } from "./Usuario";
 import { TipoProveedor } from "./TipoProveedor";
