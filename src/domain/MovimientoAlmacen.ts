@@ -1,15 +1,14 @@
 import { LoteAlimento } from "./LoteAlimento";
 import { TipoMovimiento } from "./TipoMovimiento";
-export class MovimientoAlmacen{
-    private fecha: Date;
-    private tipo: TipoMovimiento;
-    private lote: LoteAlimento;
-    private cantidad: number;
-    constructor (fecha: Date, tipo: TipoMovimiento, lote: LoteAlimento, cantidad: number){
+export class MovimientoAlmacen {
+
+    constructor (
+        private fecha: Date,
+        private tipo: TipoMovimiento,
+        private cantidad: number,
+        private lote: LoteAlimento
+    ){
         this.fecha= new Date();
-        this.tipo= tipo;
-        this.lote= lote;
-        this.cantidad= cantidad;    
     }
     public getTipo(): TipoMovimiento{
         return this.tipo;
@@ -17,17 +16,14 @@ export class MovimientoAlmacen{
     public getCantidad(): number{
         return this.cantidad;
     }
-    public getLote(): LoteAlimento{
-        return this.lote;
-    }
     public getFecha(): Date{
         return this.fecha;
     }
-    public ejecutarMovimiento(): void{
+    public realizarMovimiento(): void{
         if (this.tipo==TipoMovimiento.Entrada){
-            this.lote.aumentarCantidad(this.cantidad);
+            this.lote.aumentarStock(this.cantidad);
         }else {
-        const exito = this.lote.disminuirCantidad(this.cantidad);
+        const exito = this.lote.disminuirStock(this.cantidad);
         if (!exito) {
             throw new Error("Stock insuficiente para realizar la salida");
             }

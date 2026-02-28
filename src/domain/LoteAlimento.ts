@@ -1,33 +1,37 @@
 import { Alimento } from "./Alimento";
 export class LoteAlimento{
-    private cantidad: number;
-    private fechaIngreso: Date;
-    private fechaCaducidad: Date;
-    private numeroLote: number;
-    private alimento: Alimento;
-    private precioUnitario: number;
-    constructor (cantidad: number, fechaIngreso: Date, fechaCaducidad: Date, numeroLote: number, alimento:Alimento, precioUnitario: number){
-        if (numeroLote <= 0) {
+    constructor (
+            private stock: number,
+            private fechaIngreso: Date,
+            private fechaCaducidad: Date,
+            private idLote: number,
+            private alimento: Alimento,
+            private precioUnitario: number
+    ){
+        if (idLote <= 0) {
             throw new Error("El número de lote debe ser mayor que 0");
         }
-        if (cantidad<0){
-            throw new Error("La cantidad no puede ser negativa");
+        if (stock<0){
+            throw new Error("El stock no puede ser negativo");
         }
         if (fechaCaducidad<=fechaIngreso){
             throw new Error ("La fecha de caducidad debe ser posterior a la fecha de ingreso");
         }
-        this.cantidad= cantidad;
+        if (precioUnitario<0){
+            throw new Error("El precio unitario no puede ser negativo");
+        }
+        this.stock= stock;
         this.fechaIngreso= fechaIngreso;
         this.fechaCaducidad= fechaCaducidad;
-        this.numeroLote= numeroLote;
+        this.idLote= idLote;
         this.alimento= alimento;
         this.precioUnitario= precioUnitario;
     }
-    public getCantidad(): number{
-        return this.cantidad;
+    public getStock(): number{
+        return this.stock;
     }
-    public getNumeroDeLote(): number{
-        return this.numeroLote;
+    public getIdLote(): number{
+        return this.idLote;
     }
     public getFechaCaducidad(): Date{
         return this.fechaCaducidad;
@@ -38,19 +42,58 @@ export class LoteAlimento{
     public getPrecioUnitario(): number{
         return this.precioUnitario;
     }
-    public aumentarCantidad(n: number): boolean{
+    public aumentarStock(n: number): boolean{
         if (n>0){
-            this.cantidad+=n;
+            this.stock+=n;
             return true;
         }else return false;
     }
-    public disminuirCantidad(n: number): boolean{
-        if (this.cantidad>=n && n>0){
-            this.cantidad-=n;
+    public disminuirStock(n: number): boolean{
+        if (this.stock>=n && n>0){
+            this.stock-=n;
             return true;
         } else return false;
     }
-    public getprecioTotal(): number{
-        return this.cantidad*this.precioUnitario;
+    public getPrecioTotal(): number{
+        return this.stock*this.precioUnitario;
+    }
+     getFechaIngreso(): string {
+        return this.fechaIngreso.toLocaleString("es-PE", { timeZone: "America/Lima" });
+    }
+    public setStock(stock: number): void{
+        if (stock<0){
+            throw new Error("El stock no puede ser negativo");
+        }
+        this.stock= stock;
+    }
+    public setFechaCaducidad(fechaCaducidad: Date): void{
+        if (fechaCaducidad<=this.fechaIngreso){
+            throw new Error ("La fecha de caducidad debe ser posterior a la fecha de ingreso");
+        }
+        this.fechaCaducidad= fechaCaducidad;
+    }
+    public setPrecioUnitario(precioUnitario: number): void{
+        if (precioUnitario<0){
+            throw new Error("El precio unitario no puede ser negativo");
+        }
+        this.precioUnitario= precioUnitario;
+    }
+    public setAlimento(alimento: Alimento): void{
+        if (alimento==null){
+            throw new Error("El alimento no puede ser nulo");
+        }
+        this.alimento= alimento;
+    }
+    public setFechaIngreso(fechaIngreso: Date): void{
+        if (fechaIngreso==null){
+            throw new Error("La fecha de ingreso no puede ser nula");
+        }
+        this.fechaIngreso= fechaIngreso;
+    }
+    public setIdLote(idLote: number): void{
+        if (idLote<=0){
+            throw new Error("El número de lote debe ser mayor que 0");
+        }
+        this.idLote= idLote;
     }
 }
