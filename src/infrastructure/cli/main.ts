@@ -10,9 +10,9 @@ function main(){
         const cuentaBancaria = new CuentaBancaria("123456789", 1000);
         const lote = new LoteAlimento(10, new Date(), new Date("2026-12-31"), 1, new Alimento("Pollo", CategoriaAlimento.Proteina), 10);
         const almacen = new Almacen([], []);
-        const lotes = new Lotes([], []);
-        lotes.comprarLote(lote, cuentaBancaria);
-        almacen.agregarLote(lote);
+        const lotes = new Lotes([], [], almacen);
+        lotes.comprarLote(lote);
+        lotes.llevarAlmacen(lote);
         console.log(almacen.getLotes());
         console.log(lotes.getLotesComprados());
         console.log(cuentaBancaria.getSaldo());

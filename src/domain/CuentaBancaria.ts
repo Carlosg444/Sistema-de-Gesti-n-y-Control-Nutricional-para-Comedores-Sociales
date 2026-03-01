@@ -3,6 +3,9 @@ export class CuentaBancaria{
         private numeroCuenta: string,
         private saldo: number
     ){
+        if (!/^\d{20}$/.test(numeroCuenta)) {
+            throw new Error("El número de cuenta debe tener exactamente 20 dígitos numéricos");
+        }
         if (numeroCuenta==null){
             throw new Error("El número de cuenta no puede ser nulo");
         }
