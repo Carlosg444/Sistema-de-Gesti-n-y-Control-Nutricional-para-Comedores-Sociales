@@ -9,7 +9,7 @@ export class Proveedor extends Usuario{
         nombre: string,
         dni: string,
         rol: RolUsuario,
-        numero: number,
+        contrasena: string,
         private tipoRel: TipoRelacion,
         private listaLotes: LoteAlimento[],
         private cuentaBancaria: CuentaBancaria
@@ -20,7 +20,7 @@ export class Proveedor extends Usuario{
         if (cuentaBancaria==null){
             throw new Error("La cuenta bancaria no puede ser nula");
         }
-        super (nombre, dni, rol, numero);
+        super (nombre, dni, rol, contrasena);
     }
     public lotesDisponibles(): LoteAlimento[]{
         return this.listaLotes;

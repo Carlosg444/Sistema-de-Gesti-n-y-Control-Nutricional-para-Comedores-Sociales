@@ -1,9 +1,11 @@
 import { LoteAlimento } from "../domain/LoteAlimento";
 import { CuentaBancaria } from "../domain/CuentaBancaria";
+import { Almacen } from "./Almacen";
 export class Lotes{
     constructor(
         private lotesdonados: LoteAlimento[],
-        private lotescomprados: LoteAlimento[]
+        private lotescomprados: LoteAlimento[],
+        private almacen: Almacen
     ){};
     public agregarLoteDonado(lote: LoteAlimento): void{
         this.lotesdonados.push(lote);
@@ -21,5 +23,8 @@ export class Lotes{
         }else{
             throw new Error("Saldo insuficiente");
         }
+    }
+    public llevarAlmacen(lote: LoteAlimento): void{
+        this.almacen.agregarLote(lote);
     }
 }
