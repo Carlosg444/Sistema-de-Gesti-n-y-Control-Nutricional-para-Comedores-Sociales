@@ -3,590 +3,225 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SistemaNutri — Gestión Alimentaria</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>NutriGestión — Sistema Alimentario</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0a0e1a;
-    --surface: #111827;
-    --surface2: #1a2235;
-    --accent: #00e5a0;
-    --accent2: #0099ff;
-    --warn: #ff6b35;
-    --danger: #ff3b5c;
-    --text: #e8edf5;
-    --muted: #6b7a99;
-    --border: #1e2d47;
-    --card: #131d2e;
-    --radius: 12px;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+:root {
+  --bg: #0a0e1a;
+  --surface: #111827;
+  --surface2: #1a2235;
+  --accent: #00e5a0;
+  --accent2: #0099ff;
+  --warn: #ff6b35;
+  --danger: #ff3b5c;
+  --text: #e8edf5;
+  --muted: #6b7a99;
+  --border: #1e2d47;
+  --card: #131d2e;
+  --radius: 12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
 
-  /* ===== AUTH ===== */
-  #auth-screen {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-  #auth-screen::before {
-    content: '';
-    position: absolute;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(0,229,160,0.08) 0%, transparent 70%);
-    top: -100px; left: -100px;
-    border-radius: 50%;
-    animation: pulse 4s ease-in-out infinite;
-  }
-  #auth-screen::after {
-    content: '';
-    position: absolute;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(0,153,255,0.07) 0%, transparent 70%);
-    bottom: -50px; right: -50px;
-    border-radius: 50%;
-    animation: pulse 4s ease-in-out infinite reverse;
-  }
-  @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.1);opacity:0.7} }
+/* ===== AUTH ===== */
+#auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+#auth-screen::before{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,rgba(0,229,160,0.08) 0%,transparent 70%);top:-100px;left:-100px;border-radius:50%;animation:pulse 4s ease-in-out infinite}
+#auth-screen::after{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(0,153,255,0.07) 0%,transparent 70%);bottom:-50px;right:-50px;border-radius:50%;animation:pulse 4s ease-in-out infinite reverse}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.1);opacity:0.7}}
+.auth-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px 40px;width:440px;position:relative;z-index:1;box-shadow:0 40px 80px rgba(0,0,0,0.4);animation:slideUp 0.5s ease}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.auth-logo{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--accent);letter-spacing:-1px;margin-bottom:4px}
+.auth-sub{color:var(--muted);font-size:14px;margin-bottom:32px}
+.auth-tabs{display:flex;background:var(--surface2);border-radius:10px;padding:4px;margin-bottom:28px}
+.auth-tab{flex:1;padding:10px;text-align:center;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;border-radius:7px;transition:all 0.2s}
+.auth-tab.active{background:var(--accent);color:#0a0e1a;font-weight:700}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:12px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
+.form-group input,.form-group select{width:100%;padding:12px 16px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;transition:border-color 0.2s;outline:none}
+.form-group input:focus,.form-group select:focus{border-color:var(--accent)}
+.form-group select option{background:var(--surface2)}
+.btn-primary{width:100%;padding:14px;background:var(--accent);border:none;border-radius:10px;color:#0a0e1a;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;margin-top:8px}
+.btn-primary:hover{background:#00c988;transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,229,160,0.25)}
+.error-msg{background:rgba(255,59,92,0.1);border:1px solid rgba(255,59,92,0.3);color:var(--danger);padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:16px;display:none}
+.success-msg{background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.3);color:var(--accent);padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:16px;display:none}
 
-  .auth-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 48px 40px;
-    width: 420px;
-    position: relative;
-    z-index: 1;
-    box-shadow: 0 40px 80px rgba(0,0,0,0.4);
-    animation: slideUp 0.5s ease;
-  }
-  @keyframes slideUp { from{transform:translateY(30px);opacity:0} to{transform:translateY(0);opacity:1} }
+/* ===== APP LAYOUT ===== */
+#app-screen{display:none;min-height:100vh}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:240px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:24px 16px;z-index:100}
+.sidebar-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--accent);margin-bottom:32px;padding:0 8px}
+.nav-section-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);padding:0 14px;margin:16px 0 6px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;color:var(--muted);cursor:pointer;font-size:14px;font-weight:500;transition:all 0.2s;margin-bottom:4px;border:none;background:transparent;width:100%;text-align:left}
+.nav-item:hover{background:var(--surface2);color:var(--text)}
+.nav-item.active{background:rgba(0,229,160,0.1);color:var(--accent)}
+.nav-icon{font-size:18px;width:24px;text-align:center}
+.nav-badge{margin-left:auto;background:var(--danger);color:white;font-size:11px;font-weight:700;padding:2px 7px;border-radius:20px;min-width:20px;text-align:center}
+.sidebar-cuenta{margin-top:8px;padding:14px;background:rgba(0,229,160,0.05);border:1px solid rgba(0,229,160,0.15);border-radius:10px}
+.cuenta-label{font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);margin-bottom:4px}
+.cuenta-saldo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--accent)}
+.cuenta-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.sidebar-user{margin-top:12px;padding:14px;background:var(--surface2);border-radius:10px;display:flex;align-items:center;gap:10px}
+.user-avatar{width:36px;height:36px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:#0a0e1a;flex-shrink:0}
+.user-info{flex:1;overflow:hidden}
+.user-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-role{font-size:11px;color:var(--muted)}
+.btn-logout{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;padding:4px;transition:color 0.2s}
+.btn-logout:hover{color:var(--danger)}
+.main-content{margin-left:240px;padding:32px;min-height:100vh}
+.page{display:none;animation:fadeIn 0.3s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+.page-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;letter-spacing:-0.5px}
+.page-title span{color:var(--accent)}
 
-  .auth-logo {
-    font-family: 'Syne', sans-serif;
-    font-size: 28px;
-    font-weight: 800;
-    color: var(--accent);
-    letter-spacing: -1px;
-    margin-bottom: 4px;
-  }
-  .auth-sub { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
+/* ===== CARDS ===== */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:20px}
+.card-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:16px;color:var(--text)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:24px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.stat-value{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--accent);line-height:1;margin-bottom:4px}
+.stat-label{font-size:12px;color:var(--muted)}
+.stat-card.highlight{border-color:rgba(0,229,160,0.3);background:rgba(0,229,160,0.05)}
 
-  .auth-tabs {
-    display: flex;
-    background: var(--surface2);
-    border-radius: 10px;
-    padding: 4px;
-    margin-bottom: 28px;
-  }
-  .auth-tab {
-    flex: 1;
-    padding: 10px;
-    text-align: center;
-    border: none;
-    background: transparent;
-    color: var(--muted);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    border-radius: 7px;
-    transition: all 0.2s;
-  }
-  .auth-tab.active {
-    background: var(--accent);
-    color: #0a0e1a;
-    font-weight: 700;
-  }
+/* ===== TABLE ===== */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);padding:10px 16px;border-bottom:1px solid var(--border);font-weight:600}
+td{padding:14px 16px;border-bottom:1px solid rgba(30,45,71,0.5);font-size:14px}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,0.02)}
 
-  .form-group { margin-bottom: 18px; }
-  .form-group label {
-    display: block;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 6px;
-  }
-  .form-group input, .form-group select {
-    width: 100%;
-    padding: 12px 16px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    transition: border-color 0.2s;
-    outline: none;
-  }
-  .form-group input:focus, .form-group select:focus { border-color: var(--accent); }
-  .form-group select option { background: var(--surface2); }
+/* ===== BADGES ===== */
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-green{background:rgba(0,229,160,0.15);color:var(--accent)}
+.badge-blue{background:rgba(0,153,255,0.15);color:var(--accent2)}
+.badge-orange{background:rgba(255,107,53,0.15);color:var(--warn)}
+.badge-red{background:rgba(255,59,92,0.15);color:var(--danger)}
+.badge-gray{background:rgba(107,122,153,0.15);color:var(--muted)}
 
-  .btn-primary {
-    width: 100%;
-    padding: 14px;
-    background: var(--accent);
-    border: none;
-    border-radius: 10px;
-    color: #0a0e1a;
-    font-family: 'Syne', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-top: 8px;
-  }
-  .btn-primary:hover { background: #00c988; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,229,160,0.25); }
+/* ===== BUTTONS ===== */
+.btn{padding:9px 18px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px}
+.btn-accent{background:var(--accent);color:#0a0e1a}
+.btn-accent:hover{background:#00c988;transform:translateY(-1px)}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.btn-danger{background:rgba(255,59,92,0.1);border:1px solid rgba(255,59,92,0.3);color:var(--danger)}
+.btn-danger:hover{background:rgba(255,59,92,0.2)}
+.btn-warn{background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.3);color:var(--warn)}
+.btn-warn:hover{background:rgba(255,107,53,0.2)}
+.btn-blue{background:rgba(0,153,255,0.1);border:1px solid rgba(0,153,255,0.3);color:var(--accent2)}
+.btn-blue:hover{background:rgba(0,153,255,0.2)}
+.btn-sm{padding:6px 12px;font-size:12px}
 
-  .error-msg {
-    background: rgba(255,59,92,0.1);
-    border: 1px solid rgba(255,59,92,0.3);
-    color: var(--danger);
-    padding: 10px 14px;
-    border-radius: 8px;
-    font-size: 13px;
-    margin-bottom: 16px;
-    display: none;
-  }
+/* ===== ALERTS ===== */
+.alerts-container{margin-bottom:24px}
+.alert-item{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:10px;margin-bottom:10px;animation:slideIn 0.3s ease}
+@keyframes slideIn{from{transform:translateX(-10px);opacity:0}to{transform:translateX(0);opacity:1}}
+.alert-danger{background:rgba(255,59,92,0.08);border:1px solid rgba(255,59,92,0.25)}
+.alert-warn{background:rgba(255,107,53,0.08);border:1px solid rgba(255,107,53,0.25)}
+.alert-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.alert-content{flex:1}
+.alert-title{font-size:13px;font-weight:600;margin-bottom:2px}
+.alert-desc{font-size:12px;color:var(--muted)}
 
-  /* ===== APP LAYOUT ===== */
-  #app-screen { display: none; min-height: 100vh; }
+/* ===== MODAL ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.2s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:36px;width:480px;max-width:90vw;max-height:85vh;overflow-y:auto;transform:scale(0.95);transition:transform 0.2s}
+.modal-overlay.open .modal{transform:scale(1)}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.modal-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800}
+.modal-close{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;line-height:1;transition:color 0.2s}
+.modal-close:hover{color:var(--danger)}
+.empty-state{text-align:center;padding:48px 24px;color:var(--muted)}
+.empty-icon{font-size:48px;margin-bottom:12px;opacity:0.5}
+.empty-text{font-size:14px}
+.inner-tabs{display:flex;gap:4px;background:var(--surface2);border-radius:10px;padding:4px;margin-bottom:24px;width:fit-content}
+.inner-tab{padding:8px 20px;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;border-radius:7px;transition:all 0.2s}
+.inner-tab.active{background:var(--surface);color:var(--text);font-weight:600}
+.lote-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.lote-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:border-color 0.2s}
+.lote-card:hover{border-color:var(--accent)}
+.lote-card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px}
+.lote-name{font-family:'Syne',sans-serif;font-weight:700;font-size:16px}
+.lote-id{font-size:11px;color:var(--muted);margin-top:2px}
+.lote-info{margin-bottom:16px}
+.lote-info-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--border)}
+.lote-info-row:last-child{border-bottom:none}
+.lote-info-label{color:var(--muted)}
+.lote-actions{display:flex;gap:8px}
+.plan-bar{background:var(--surface2);border-radius:6px;height:8px;overflow:hidden;margin:6px 0 12px}
+.plan-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:6px;transition:width 0.5s ease}
+.section-divider{height:1px;background:var(--border);margin:24px 0}
 
-  .sidebar {
-    position: fixed;
-    left: 0; top: 0; bottom: 0;
-    width: 240px;
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    padding: 24px 16px;
-    z-index: 100;
-  }
-  .sidebar-logo {
-    font-family: 'Syne', sans-serif;
-    font-size: 20px;
-    font-weight: 800;
-    color: var(--accent);
-    margin-bottom: 32px;
-    padding: 0 8px;
-  }
-  .nav-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 14px;
-    border-radius: 10px;
-    color: var(--muted);
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.2s;
-    margin-bottom: 4px;
-    border: none;
-    background: transparent;
-    width: 100%;
-    text-align: left;
-  }
-  .nav-item:hover { background: var(--surface2); color: var(--text); }
-  .nav-item.active { background: rgba(0,229,160,0.1); color: var(--accent); }
-  .nav-icon { font-size: 18px; width: 24px; text-align: center; }
-  .nav-badge {
-    margin-left: auto;
-    background: var(--danger);
-    color: white;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 2px 7px;
-    border-radius: 20px;
-    min-width: 20px;
-    text-align: center;
-  }
+/* ===== MENÚ DIARIO ===== */
+.menu-combinacion{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.menu-alimento-chip{padding:8px 16px;border-radius:20px;background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.25);color:var(--accent);font-size:13px;font-weight:600}
+.porcion-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:12px}
+.porcion-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.porcion-nombre{font-weight:700;font-size:15px}
+.porcion-items{display:flex;flex-wrap:wrap;gap:8px}
+.porcion-item{background:var(--surface2);border-radius:8px;padding:6px 12px;font-size:12px}
+.porcion-item strong{color:var(--accent)}
 
-  .sidebar-user {
-    margin-top: auto;
-    padding: 14px;
-    background: var(--surface2);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .user-avatar {
-    width: 36px; height: 36px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 14px;
-    color: #0a0e1a;
-    flex-shrink: 0;
-  }
-  .user-info { flex: 1; overflow: hidden; }
-  .user-name { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .user-role { font-size: 11px; color: var(--muted); }
-  .btn-logout {
-    background: none; border: none; color: var(--muted);
-    cursor: pointer; font-size: 16px; padding: 4px;
-    transition: color 0.2s;
-  }
-  .btn-logout:hover { color: var(--danger); }
+/* ===== DONATIVOS ===== */
+.donativo-highlight{background:rgba(0,229,160,0.05);border:1px solid rgba(0,229,160,0.2);border-radius:var(--radius);padding:20px;margin-bottom:20px;display:flex;align-items:center;gap:20px}
+.donativo-total{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:var(--accent)}
 
-  .main-content {
-    margin-left: 240px;
-    padding: 32px;
-    min-height: 100vh;
-  }
-
-  .page { display: none; animation: fadeIn 0.3s ease; }
-  .page.active { display: block; }
-  @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-
-  .page-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 28px;
-  }
-  .page-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 26px;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-  }
-  .page-title span { color: var(--accent); }
-
-  /* ===== CARDS ===== */
-  .card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 24px;
-    margin-bottom: 20px;
-  }
-  .card-title {
-    font-family: 'Syne', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: 16px;
-    color: var(--text);
-  }
-
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 16px;
-    margin-bottom: 24px;
-  }
-  .stat-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-  }
-  .stat-value {
-    font-family: 'Syne', sans-serif;
-    font-size: 32px;
-    font-weight: 800;
-    color: var(--accent);
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-  .stat-label { font-size: 12px; color: var(--muted); }
-
-  /* ===== TABLE ===== */
-  .table-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; }
-  th {
-    text-align: left;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--muted);
-    padding: 10px 16px;
-    border-bottom: 1px solid var(--border);
-    font-weight: 600;
-  }
-  td {
-    padding: 14px 16px;
-    border-bottom: 1px solid rgba(30,45,71,0.5);
-    font-size: 14px;
-  }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: rgba(255,255,255,0.02); }
-
-  /* ===== BADGES ===== */
-  .badge {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 600;
-  }
-  .badge-green { background: rgba(0,229,160,0.15); color: var(--accent); }
-  .badge-blue { background: rgba(0,153,255,0.15); color: var(--accent2); }
-  .badge-orange { background: rgba(255,107,53,0.15); color: var(--warn); }
-  .badge-red { background: rgba(255,59,92,0.15); color: var(--danger); }
-  .badge-gray { background: rgba(107,122,153,0.15); color: var(--muted); }
-
-  /* ===== BUTTONS ===== */
-  .btn {
-    padding: 9px 18px;
-    border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .btn-accent { background: var(--accent); color: #0a0e1a; }
-  .btn-accent:hover { background: #00c988; transform: translateY(-1px); }
-  .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
-  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
-  .btn-danger { background: rgba(255,59,92,0.1); border: 1px solid rgba(255,59,92,0.3); color: var(--danger); }
-  .btn-danger:hover { background: rgba(255,59,92,0.2); }
-  .btn-warn { background: rgba(255,107,53,0.1); border: 1px solid rgba(255,107,53,0.3); color: var(--warn); }
-  .btn-warn:hover { background: rgba(255,107,53,0.2); }
-  .btn-sm { padding: 6px 12px; font-size: 12px; }
-
-  /* ===== ALERTS ===== */
-  .alerts-container { margin-bottom: 24px; }
-  .alert-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 14px 16px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    animation: slideIn 0.3s ease;
-  }
-  @keyframes slideIn { from{transform:translateX(-10px);opacity:0} to{transform:translateX(0);opacity:1} }
-  .alert-danger { background: rgba(255,59,92,0.08); border: 1px solid rgba(255,59,92,0.25); }
-  .alert-warn { background: rgba(255,107,53,0.08); border: 1px solid rgba(255,107,53,0.25); }
-  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-  .alert-content { flex: 1; }
-  .alert-title { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
-  .alert-desc { font-size: 12px; color: var(--muted); }
-
-  /* ===== MODAL ===== */
-  .modal-overlay {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(4px);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s;
-  }
-  .modal-overlay.open { opacity: 1; pointer-events: all; }
-  .modal {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 36px;
-    width: 460px;
-    max-width: 90vw;
-    max-height: 85vh;
-    overflow-y: auto;
-    transform: scale(0.95);
-    transition: transform 0.2s;
-  }
-  .modal-overlay.open .modal { transform: scale(1); }
-  .modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 24px;
-  }
-  .modal-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; }
-  .modal-close {
-    background: none; border: none; color: var(--muted);
-    font-size: 22px; cursor: pointer; line-height: 1;
-    transition: color 0.2s;
-  }
-  .modal-close:hover { color: var(--danger); }
-
-  /* ===== EMPTY STATE ===== */
-  .empty-state {
-    text-align: center;
-    padding: 48px 24px;
-    color: var(--muted);
-  }
-  .empty-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.5; }
-  .empty-text { font-size: 14px; }
-
-  /* ===== TABS INSIDE PAGE ===== */
-  .inner-tabs {
-    display: flex;
-    gap: 4px;
-    background: var(--surface2);
-    border-radius: 10px;
-    padding: 4px;
-    margin-bottom: 24px;
-    width: fit-content;
-  }
-  .inner-tab {
-    padding: 8px 20px;
-    border: none;
-    background: transparent;
-    color: var(--muted);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    border-radius: 7px;
-    transition: all 0.2s;
-  }
-  .inner-tab.active { background: var(--surface); color: var(--text); font-weight: 600; }
-
-  /* ===== PROVEEDOR LOTE CARD ===== */
-  .lote-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-  }
-  .lote-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    transition: border-color 0.2s;
-  }
-  .lote-card:hover { border-color: var(--accent); }
-  .lote-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
-  .lote-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; }
-  .lote-id { font-size: 11px; color: var(--muted); margin-top: 2px; }
-  .lote-info { margin-bottom: 16px; }
-  .lote-info-row { display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px solid var(--border); }
-  .lote-info-row:last-child { border-bottom: none; }
-  .lote-info-label { color: var(--muted); }
-  .lote-actions { display: flex; gap: 8px; }
-
-  /* ===== PLAN NUTRICIONAL ===== */
-  .plan-bar {
-    background: var(--surface2);
-    border-radius: 6px;
-    height: 8px;
-    overflow: hidden;
-    margin: 6px 0 12px;
-  }
-  .plan-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    border-radius: 6px;
-    transition: width 0.5s ease;
-  }
-
-  .section-divider {
-    height: 1px;
-    background: var(--border);
-    margin: 24px 0;
-  }
-
-  /* ===== RESPONSIVE ===== */
-  @media (max-width: 768px) {
-    .sidebar { transform: translateX(-100%); }
-    .main-content { margin-left: 0; padding: 16px; }
-  }
+@media(max-width:768px){.sidebar{transform:translateX(-100%)}.main-content{margin-left:0;padding:16px}}
 </style>
 </head>
 <body>
 
-<!-- ===== AUTH SCREEN ===== -->
+<!-- ===== AUTH ===== -->
 <div id="auth-screen">
   <div class="auth-card">
     <div class="auth-logo">🌿 NutriGestión</div>
     <div class="auth-sub">Sistema de gestión alimentaria</div>
-
     <div class="auth-tabs">
-      <button class="auth-tab active" onclick="switchTab('login')">Iniciar sesión</button>
-      <button class="auth-tab" onclick="switchTab('register')">Registrarse</button>
+      <button class="auth-tab active" onclick="switchAuthTab('login')">Iniciar sesión</button>
+      <button class="auth-tab" onclick="switchAuthTab('register')">Registrarse</button>
     </div>
-
     <div id="auth-error" class="error-msg"></div>
-
     <!-- LOGIN -->
     <div id="tab-login">
-      <div class="form-group">
-        <label>DNI</label>
-        <input type="text" id="login-dni" placeholder="12345678" maxlength="8">
-      </div>
-      <div class="form-group">
-        <label>Contraseña</label>
-        <input type="password" id="login-pass" placeholder="••••••••">
-      </div>
+      <div class="form-group"><label>DNI</label><input type="text" id="login-dni" placeholder="12345678" maxlength="8"></div>
+      <div class="form-group"><label>Contraseña</label><input type="password" id="login-pass" placeholder="••••••••"></div>
       <button class="btn-primary" onclick="doLogin()">Entrar →</button>
     </div>
-
     <!-- REGISTER -->
     <div id="tab-register" style="display:none">
-      <div class="form-group">
-        <label>Nombre completo</label>
-        <input type="text" id="reg-nombre" placeholder="Juan Pérez">
-      </div>
-      <div class="form-group">
-        <label>DNI</label>
-        <input type="text" id="reg-dni" placeholder="12345678" maxlength="8">
-      </div>
-      <div class="form-group">
-        <label>Contraseña</label>
-        <input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres">
-      </div>
-      <div class="form-group">
-        <label>Rol</label>
-        <select id="reg-rol">
+      <div class="form-group"><label>Nombre completo</label><input type="text" id="reg-nombre" placeholder="Juan Pérez"></div>
+      <div class="form-group"><label>DNI</label><input type="text" id="reg-dni" placeholder="12345678" maxlength="8"></div>
+      <div class="form-group"><label>Contraseña</label><input type="password" id="reg-pass" placeholder="Mínimo 6 caracteres"></div>
+      <div class="form-group"><label>Rol</label>
+        <select id="reg-rol" onchange="toggleProvFields()">
           <option value="Responsable">Responsable</option>
           <option value="Proveedor">Proveedor</option>
         </select>
       </div>
-      <!-- Campos solo para Proveedor -->
       <div id="prov-fields" style="display:none">
-        <div class="form-group">
-          <label>Tipo de relación</label>
-          <select id="reg-tiporel">
-            <option value="comercial">Comercial</option>
-            <option value="donante">Donante</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Número de cuenta bancaria</label>
-          <input type="text" id="reg-cuenta" placeholder="001-123456789">
-        </div>
-        <div class="form-group">
-          <label>Saldo inicial (S/.)</label>
-          <input type="number" id="reg-saldo" placeholder="0.00" min="0" step="0.01">
-        </div>
+        <div class="form-group"><label>Número de cuenta bancaria (20 dígitos)</label><input type="text" id="reg-cuenta" placeholder="00000000000000000001" maxlength="20"></div>
+        <div class="form-group"><label>Saldo inicial (S/.)</label><input type="number" id="reg-saldo" placeholder="0.00" min="0" step="0.01"></div>
       </div>
       <button class="btn-primary" onclick="doRegister()">Crear cuenta →</button>
     </div>
   </div>
 </div>
 
-<!-- ===== APP SCREEN ===== -->
+<!-- ===== APP ===== -->
 <div id="app-screen">
-  <!-- Sidebar -->
   <nav class="sidebar">
     <div class="sidebar-logo">🌿 NutriGestión</div>
     <div id="nav-menu"></div>
+    <!-- Cuenta empresa solo para responsables -->
+    <div id="sidebar-cuenta-empresa" style="display:none">
+      <div class="sidebar-cuenta">
+        <div class="cuenta-label">💰 Cuenta empresa</div>
+        <div class="cuenta-saldo" id="sidebar-saldo">S/. 0.00</div>
+        <div class="cuenta-sub">Saldo disponible</div>
+      </div>
+    </div>
     <div class="sidebar-user">
       <div class="user-avatar" id="user-avatar">?</div>
       <div class="user-info">
@@ -595,12 +230,12 @@
       </div>
       <button class="btn-logout" onclick="doLogout()" title="Cerrar sesión">⏻</button>
     </div>
+    <button onclick="resetearDatos()" style="margin-top:8px;width:100%;padding:8px;background:transparent;border:1px dashed var(--border);border-radius:8px;color:var(--muted);font-size:11px;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--danger)';this.style.color='var(--danger)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">🔄 Resetear datos de prueba</button>
   </nav>
 
-  <!-- Main -->
   <main class="main-content">
 
-    <!-- ===== PROVEEDOR PAGES ===== -->
+    <!-- PROVEEDOR: MIS LOTES -->
     <div id="page-mis-lotes" class="page">
       <div class="page-header">
         <div class="page-title">Mis <span>Lotes</span></div>
@@ -610,69 +245,83 @@
       <div id="lotes-grid" class="lote-grid"></div>
     </div>
 
-    <!-- ===== RESPONSABLE PAGES ===== -->
+    <!-- RESPONSABLE: ALMACÉN -->
     <div id="page-almacen" class="page">
       <div class="page-header">
-        <div class="page-title"><span>Almacén</span></div>
+        <div class="page-title"><span>Almacén</span> de la Empresa</div>
       </div>
       <div id="alertas-almacen" class="alerts-container"></div>
       <div class="inner-tabs">
-        <button class="inner-tab active" onclick="switchInnerTab('almacen', 'lotes-almacen')">Lotes en almacén</button>
-        <button class="inner-tab" onclick="switchInnerTab('almacen', 'movimientos')">Movimientos</button>
+        <button class="inner-tab active" onclick="switchInnerTab('almacen','lotes-almacen')">Lotes en almacén</button>
+        <button class="inner-tab" onclick="switchInnerTab('almacen','movimientos')">Movimientos</button>
       </div>
-
       <div id="sub-lotes-almacen">
         <div class="stats-grid" id="stats-almacen"></div>
         <div class="card">
           <div class="card-title">Lotes en almacén</div>
           <div class="table-wrap">
-            <table>
-              <thead><tr>
-                <th>ID Lote</th><th>Alimento</th><th>Categoría</th>
-                <th>Stock</th><th>Caducidad</th><th>P. Unitario</th><th>Estado</th>
-              </tr></thead>
-              <tbody id="tabla-almacen"></tbody>
-            </table>
+            <table><thead><tr><th>ID</th><th>Alimento</th><th>Categoría</th><th>Stock</th><th>Caducidad</th><th>P. Unitario</th><th>Origen</th><th>Estado</th></tr></thead>
+            <tbody id="tabla-almacen"></tbody></table>
           </div>
         </div>
       </div>
-
       <div id="sub-movimientos" style="display:none">
         <div class="page-header" style="margin-bottom:16px">
           <div></div>
-          <button class="btn btn-accent" onclick="openModal('modal-movimiento')">+ Registrar movimiento</button>
+          <button class="btn btn-accent" onclick="prepMovModal();openModal('modal-movimiento')">+ Registrar movimiento</button>
         </div>
         <div class="card">
           <div class="card-title">Historial de movimientos</div>
           <div class="table-wrap">
-            <table>
-              <thead><tr>
-                <th>Fecha</th><th>Tipo</th><th>Alimento</th><th>Cantidad</th>
-              </tr></thead>
-              <tbody id="tabla-movimientos"></tbody>
-            </table>
+            <table><thead><tr><th>Fecha</th><th>Tipo</th><th>Alimento</th><th>Cantidad</th></tr></thead>
+            <tbody id="tabla-movimientos"></tbody></table>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- RESPONSABLE: GESTIÓN DE LOTES -->
     <div id="page-lotes-resp" class="page">
       <div class="page-header">
         <div class="page-title">Gestión de <span>Lotes</span></div>
-        <button class="btn btn-accent" onclick="openModal('modal-comprar-lote')">🛒 Comprar lote</button>
+        <button class="btn btn-accent" onclick="prepComprarModal();openModal('modal-comprar-lote')">🛒 Comprar lote</button>
       </div>
       <div class="inner-tabs">
-        <button class="inner-tab active" onclick="switchInnerTab('lotes-resp', 'donados')">Donados</button>
-        <button class="inner-tab" onclick="switchInnerTab('lotes-resp', 'comprados')">Comprados</button>
+        <button class="inner-tab active" onclick="switchInnerTab('lotes-resp','donados')">Donados</button>
+        <button class="inner-tab" onclick="switchInnerTab('lotes-resp','comprados')">Comprados</button>
       </div>
-      <div id="sub-donados">
-        <div class="lote-grid" id="lotes-donados-grid"></div>
+      <div id="sub-donados"><div class="lote-grid" id="lotes-donados-grid"></div></div>
+      <div id="sub-comprados" style="display:none"><div class="lote-grid" id="lotes-comprados-grid"></div></div>
+    </div>
+
+    <!-- RESPONSABLE: DONATIVOS -->
+    <div id="page-donativos" class="page">
+      <div class="page-header">
+        <div class="page-title">💰 <span>Donativos</span></div>
+        <button class="btn btn-accent" onclick="openModal('modal-add-donativo')">+ Registrar donativo</button>
       </div>
-      <div id="sub-comprados" style="display:none">
-        <div class="lote-grid" id="lotes-comprados-grid"></div>
+      <div class="donativo-highlight">
+        <div>
+          <div style="font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Saldo total cuenta empresa</div>
+          <div class="donativo-total" id="donativo-saldo-total">S/. 0.00</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px" id="donativo-cuenta-num">Cuenta: —</div>
+        </div>
+        <div style="margin-left:auto;text-align:right">
+          <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Total recaudado en donativos</div>
+          <div style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--accent2)" id="donativo-total-recaudado">S/. 0.00</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px" id="donativo-count">0 donativos registrados</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Historial de donativos</div>
+        <div class="table-wrap">
+          <table><thead><tr><th>#</th><th>Donante</th><th>Monto</th><th>Fecha</th></tr></thead>
+          <tbody id="tabla-donativos"></tbody></table>
+        </div>
       </div>
     </div>
 
+    <!-- RESPONSABLE: BENEFICIARIOS -->
     <div id="page-beneficiarios" class="page">
       <div class="page-header">
         <div class="page-title">Lista de <span>Beneficiarios</span></div>
@@ -681,6 +330,21 @@
       <div id="beneficiarios-list"></div>
     </div>
 
+    <!-- RESPONSABLE: MENÚ DIARIO -->
+    <div id="page-menu" class="page">
+      <div class="page-header">
+        <div class="page-title">🍽️ Menú <span>Diario</span></div>
+        <button class="btn btn-accent" onclick="generarMenu()">⚡ Generar menú de hoy</button>
+      </div>
+      <div id="menu-content">
+        <div class="empty-state">
+          <div class="empty-icon">🍽️</div>
+          <div class="empty-text">Presiona "Generar menú de hoy" para calcular las porciones</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALERTAS -->
     <div id="page-alertas" class="page">
       <div class="page-header">
         <div class="page-title">Centro de <span>Alertas</span></div>
@@ -688,76 +352,15 @@
       <div id="all-alertas"></div>
     </div>
 
-    <!-- ===== ADMIN PAGES ===== -->
-    <div id="page-admin-usuarios" class="page">
-      <div class="page-header">
-        <div class="page-title">🛡️ Panel <span>Administrador</span> — Usuarios</div>
-      </div>
-      <div class="stats-grid" id="admin-stats"></div>
-      <div class="card">
-        <div class="card-title">Todos los usuarios registrados</div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr>
-              <th>#</th><th>Nombre</th><th>DNI</th><th>Rol</th><th>Detalle</th><th>Acción</th>
-            </tr></thead>
-            <tbody id="admin-tabla-usuarios"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div id="page-admin-lotes" class="page">
-      <div class="page-header">
-        <div class="page-title">🛡️ Panel <span>Administrador</span> — Lotes</div>
-      </div>
-      <div class="card">
-        <div class="card-title">Lotes del almacén</div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>ID</th><th>Alimento</th><th>Categoría</th><th>Stock</th><th>P.Unitario</th><th>Caducidad</th><th>Estado</th></tr></thead>
-            <tbody id="admin-tabla-lotes-almacen"></tbody>
-          </table>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title">Lotes de proveedores</div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Proveedor</th><th>ID Lote</th><th>Alimento</th><th>Stock</th><th>P.Unitario</th><th>Caducidad</th></tr></thead>
-            <tbody id="admin-tabla-lotes-prov"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div id="page-admin-beneficiarios" class="page">
-      <div class="page-header">
-        <div class="page-title">🛡️ Panel <span>Administrador</span> — Beneficiarios</div>
-      </div>
-      <div class="card">
-        <div class="card-title">Todos los beneficiarios</div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>ID</th><th>Nombre</th><th>DNI</th><th>Edad</th><th>CSE</th><th>Peso</th><th>Comidas cubiertas</th></tr></thead>
-            <tbody id="admin-tabla-beneficiarios"></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
   </main>
 </div>
 
 <!-- ===== MODALS ===== -->
 
-<!-- Modal agregar lote (Proveedor) -->
+<!-- Agregar lote (Proveedor) -->
 <div class="modal-overlay" id="modal-add-lote">
   <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Agregar lote</div>
-      <button class="modal-close" onclick="closeModal('modal-add-lote')">×</button>
-    </div>
+    <div class="modal-header"><div class="modal-title">Agregar lote</div><button class="modal-close" onclick="closeModal('modal-add-lote')">×</button></div>
     <div class="form-group"><label>ID Lote</label><input type="number" id="lote-id" min="1" placeholder="Ej: 101"></div>
     <div class="form-group"><label>Nombre del alimento</label><input type="text" id="lote-alimento" placeholder="Ej: Arroz"></div>
     <div class="form-group"><label>Categoría</label>
@@ -772,19 +375,16 @@
     <div class="form-group"><label>Fecha de ingreso</label><input type="date" id="lote-ingreso"></div>
     <div class="form-group"><label>Fecha de caducidad</label><input type="date" id="lote-caducidad"></div>
     <div id="modal-lote-error" class="error-msg"></div>
-    <button class="btn btn-accent" style="width:100%;padding:13px;" onclick="agregarLote()">Agregar lote</button>
+    <button class="btn btn-accent" style="width:100%;padding:13px" onclick="agregarLote()">Agregar lote</button>
   </div>
 </div>
 
-<!-- Modal vender lote -->
+<!-- Vender lote -->
 <div class="modal-overlay" id="modal-vender">
   <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Vender lote</div>
-      <button class="modal-close" onclick="closeModal('modal-vender')">×</button>
-    </div>
-    <p style="font-size:14px;color:var(--muted);margin-bottom:20px">¿Confirmas que deseas vender este lote? Se eliminará de tu lista.</p>
-    <div id="vender-info" style="font-size:14px;margin-bottom:20px;padding:14px;background:var(--surface2);border-radius:8px;"></div>
+    <div class="modal-header"><div class="modal-title">Vender lote</div><button class="modal-close" onclick="closeModal('modal-vender')">×</button></div>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:20px">Al vender, el lote saldrá de tu lista y el monto se depositará en tu cuenta bancaria.</p>
+    <div id="vender-info" style="font-size:14px;margin-bottom:20px;padding:14px;background:var(--surface2);border-radius:8px;line-height:1.7"></div>
     <div style="display:flex;gap:10px">
       <button class="btn btn-outline" style="flex:1" onclick="closeModal('modal-vender')">Cancelar</button>
       <button class="btn btn-accent" style="flex:1" onclick="confirmarVenta()">Confirmar venta</button>
@@ -792,15 +392,12 @@
   </div>
 </div>
 
-<!-- Modal donar lote -->
+<!-- Donar lote -->
 <div class="modal-overlay" id="modal-donar">
   <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Donar lote</div>
-      <button class="modal-close" onclick="closeModal('modal-donar')">×</button>
-    </div>
-    <p style="font-size:14px;color:var(--muted);margin-bottom:20px">¿Confirmas que deseas donar este lote? Se transferirá al responsable.</p>
-    <div id="donar-info" style="font-size:14px;margin-bottom:20px;padding:14px;background:var(--surface2);border-radius:8px;"></div>
+    <div class="modal-header"><div class="modal-title">Donar lote</div><button class="modal-close" onclick="closeModal('modal-donar')">×</button></div>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:20px">El lote será transferido directamente al almacén de la empresa sin costo.</p>
+    <div id="donar-info" style="font-size:14px;margin-bottom:20px;padding:14px;background:var(--surface2);border-radius:8px;line-height:1.7"></div>
     <div style="display:flex;gap:10px">
       <button class="btn btn-outline" style="flex:1" onclick="closeModal('modal-donar')">Cancelar</button>
       <button class="btn btn-warn" style="flex:1" onclick="confirmarDonacion()">Confirmar donación</button>
@@ -808,158 +405,179 @@
   </div>
 </div>
 
-<!-- Modal registrar movimiento -->
+<!-- Registrar movimiento -->
 <div class="modal-overlay" id="modal-movimiento">
   <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Registrar movimiento</div>
-      <button class="modal-close" onclick="closeModal('modal-movimiento')">×</button>
-    </div>
+    <div class="modal-header"><div class="modal-title">Registrar movimiento</div><button class="modal-close" onclick="closeModal('modal-movimiento')">×</button></div>
     <div class="form-group"><label>Tipo</label>
-      <select id="mov-tipo">
-        <option value="Entrada">Entrada</option>
-        <option value="Salida">Salida</option>
-      </select>
+      <select id="mov-tipo"><option value="Entrada">Entrada</option><option value="Salida">Salida</option></select>
     </div>
-    <div class="form-group"><label>Lote</label>
-      <select id="mov-lote"></select>
-    </div>
-    <div class="form-group"><label>Cantidad</label>
-      <input type="number" id="mov-cantidad" min="1" placeholder="Ej: 50">
-    </div>
+    <div class="form-group"><label>Lote</label><select id="mov-lote"></select></div>
+    <div class="form-group"><label>Cantidad</label><input type="number" id="mov-cantidad" min="1" placeholder="Ej: 50"></div>
     <div id="modal-mov-error" class="error-msg"></div>
-    <button class="btn btn-accent" style="width:100%;padding:13px;" onclick="registrarMovimiento()">Registrar</button>
+    <button class="btn btn-accent" style="width:100%;padding:13px" onclick="registrarMovimiento()">Registrar</button>
   </div>
 </div>
 
-<!-- Modal comprar lote -->
+<!-- Comprar lote (Responsable) -->
 <div class="modal-overlay" id="modal-comprar-lote">
   <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Comprar lote a proveedor</div>
-      <button class="modal-close" onclick="closeModal('modal-comprar-lote')">×</button>
+    <div class="modal-header"><div class="modal-title">Comprar lote a proveedor</div><button class="modal-close" onclick="closeModal('modal-comprar-lote')">×</button></div>
+    <div style="padding:12px;background:rgba(0,229,160,0.05);border:1px solid rgba(0,229,160,0.2);border-radius:8px;margin-bottom:20px;font-size:13px">
+      💰 Saldo empresa: <strong style="color:var(--accent)" id="comprar-saldo-empresa">S/. 0.00</strong>
     </div>
-    <div class="form-group"><label>Proveedor</label>
-      <select id="comprar-proveedor" onchange="actualizarLotesProveedor()"></select>
-    </div>
-    <div class="form-group"><label>Lote disponible</label>
-      <select id="comprar-lote-select"></select>
-    </div>
-    <div id="comprar-lote-info" style="font-size:13px;padding:12px;background:var(--surface2);border-radius:8px;margin-bottom:16px;display:none;"></div>
+    <div class="form-group"><label>Proveedor</label><select id="comprar-proveedor" onchange="actualizarLotesProveedor()"></select></div>
+    <div class="form-group"><label>Lote disponible</label><select id="comprar-lote-select" onchange="actualizarInfoLote()"></select></div>
+    <div id="comprar-lote-info" style="font-size:13px;padding:12px;background:var(--surface2);border-radius:8px;margin-bottom:16px;display:none;line-height:1.8"></div>
     <div id="modal-comprar-error" class="error-msg"></div>
-    <button class="btn btn-accent" style="width:100%;padding:13px;" onclick="comprarLote()">Comprar lote</button>
+    <button class="btn btn-accent" style="width:100%;padding:13px" onclick="comprarLote()">Comprar lote</button>
   </div>
 </div>
 
-<!-- Modal registrar beneficiario -->
+<!-- Registrar donativo -->
+<div class="modal-overlay" id="modal-add-donativo">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">Registrar donativo</div><button class="modal-close" onclick="closeModal('modal-add-donativo')">×</button></div>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:20px">El monto se depositará automáticamente en la cuenta de la empresa.</p>
+    <div class="form-group"><label>Nombre del donante</label><input type="text" id="don-nombre" placeholder="Ej: Carlos Ramírez"></div>
+    <div class="form-group"><label>Monto (S/.)</label><input type="number" id="don-monto" min="0.01" step="0.01" placeholder="100.00"></div>
+    <div id="modal-don-error" class="error-msg"></div>
+    <div id="modal-don-success" class="success-msg"></div>
+    <button class="btn btn-accent" style="width:100%;padding:13px" onclick="registrarDonativo()">Registrar donativo</button>
+  </div>
+</div>
+
+<!-- Registrar beneficiario -->
 <div class="modal-overlay" id="modal-add-beneficiario">
   <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Registrar beneficiario</div>
-      <button class="modal-close" onclick="closeModal('modal-add-beneficiario')">×</button>
-    </div>
+    <div class="modal-header"><div class="modal-title">Registrar beneficiario</div><button class="modal-close" onclick="closeModal('modal-add-beneficiario')">×</button></div>
     <div class="form-group"><label>Nombre</label><input type="text" id="ben-nombre" placeholder="María García"></div>
     <div class="form-group"><label>DNI</label><input type="text" id="ben-dni" placeholder="12345678" maxlength="8"></div>
     <div class="form-group"><label>Teléfono</label><input type="number" id="ben-numero" placeholder="987654321"></div>
     <div class="form-group"><label>Edad</label><input type="number" id="ben-edad" min="0" placeholder="35"></div>
     <div class="form-group"><label>ID Beneficiario</label><input type="text" id="ben-id" placeholder="BEN-001"></div>
     <div class="form-group"><label>Clasificación socioeconómica</label>
-      <select id="ben-cse">
-        <option value="Pobre">Pobre</option>
-        <option value="PobreExtremo">Pobre Extremo</option>
-      </select>
+      <select id="ben-cse"><option value="Pobre">Pobre</option><option value="PobreExtremo">Pobre Extremo</option></select>
     </div>
     <div class="section-divider"></div>
     <div style="font-size:13px;font-weight:600;margin-bottom:14px;color:var(--muted)">PLAN NUTRICIONAL</div>
     <div class="form-group"><label>Peso (kg)</label><input type="number" id="ben-kg" min="1" placeholder="60"></div>
-    <div class="form-group"><label>Comidas cubiertas</label>
-      <div style="display:flex;gap:16px;margin-top:8px;font-size:13px;">
-        <label style="display:flex;align-items:center;gap:6px;color:var(--text);text-transform:none;letter-spacing:0;font-size:13px;font-weight:400;">
-          <input type="checkbox" id="ben-desayuno"> Desayuno
-        </label>
-        <label style="display:flex;align-items:center;gap:6px;color:var(--text);text-transform:none;letter-spacing:0;font-size:13px;font-weight:400;">
-          <input type="checkbox" id="ben-almuerzo"> Almuerzo
-        </label>
-        <label style="display:flex;align-items:center;gap:6px;color:var(--text);text-transform:none;letter-spacing:0;font-size:13px;font-weight:400;">
-          <input type="checkbox" id="ben-cena"> Cena
-        </label>
+    <div class="form-group"><label>Comidas ya cubiertas hoy</label>
+      <div style="display:flex;gap:16px;margin-top:8px;font-size:13px">
+        <label style="display:flex;align-items:center;gap:6px;color:var(--text);text-transform:none;letter-spacing:0;font-size:13px;font-weight:400"><input type="checkbox" id="ben-desayuno"> Desayuno</label>
+        <label style="display:flex;align-items:center;gap:6px;color:var(--text);text-transform:none;letter-spacing:0;font-size:13px;font-weight:400"><input type="checkbox" id="ben-almuerzo"> Almuerzo</label>
+        <label style="display:flex;align-items:center;gap:6px;color:var(--text);text-transform:none;letter-spacing:0;font-size:13px;font-weight:400"><input type="checkbox" id="ben-cena"> Cena</label>
       </div>
     </div>
     <div id="modal-ben-error" class="error-msg"></div>
-    <button class="btn btn-accent" style="width:100%;padding:13px;" onclick="registrarBeneficiario()">Registrar</button>
+    <button class="btn btn-accent" style="width:100%;padding:13px" onclick="registrarBeneficiario()">Registrar</button>
   </div>
 </div>
 
-<!-- Modal plan nutricional -->
+<!-- Ver plan nutricional -->
 <div class="modal-overlay" id="modal-plan">
   <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">Plan Nutricional</div>
-      <button class="modal-close" onclick="closeModal('modal-plan')">×</button>
-    </div>
+    <div class="modal-header"><div class="modal-title">Plan Nutricional</div><button class="modal-close" onclick="closeModal('modal-plan')">×</button></div>
     <div id="plan-content"></div>
   </div>
 </div>
 
 <script>
 // ============================================================
-// LOCALSTORAGE — PERSISTENCIA
+// PERSISTENCIA
 // ============================================================
 const DEFAULTS = {
   usuarios: [
-    { nombre: 'Admin Demo', dni: '00000001', contrasena: '123456', rol: 'Responsable' },
-    { nombre: 'Proveedor Demo', dni: '00000002', contrasena: '123456', rol: 'Proveedor',
-      tipoRel: 'comercial', cuentaBancaria: { numero: '001-000000001', saldo: 5000 },
+    { nombre: 'Ana Torres', dni: '00000001', contrasena: '123456', rol: 'Responsable' },
+    { nombre: 'Proveedor Alimentos SAC', dni: '00000002', contrasena: '123456', rol: 'Proveedor',
+      cuentaBancaria: { numero: '00000000000000000002', saldo: 8000 },
       listaLotes: [
-        { idLote: 1, alimento: { nombre: 'Arroz', categoria: 'CEREAL' }, stock: 200, precioUnitario: 2.5, fechaIngreso: '2025-01-01', fechaCaducidad: '2026-06-01' },
-        { idLote: 2, alimento: { nombre: 'Leche', categoria: 'LACTEO' }, stock: 5, precioUnitario: 3.8, fechaIngreso: '2025-12-01', fechaCaducidad: '2026-03-05' }
+        { idLote: 20, alimento: { nombre: 'Pechuga de pollo', categoria: 'PROTEINAS' }, stock: 120, precioUnitario: 9.5,  fechaIngreso: '2026-01-10', fechaCaducidad: '2026-09-01' },
+        { idLote: 21, alimento: { nombre: 'Carne de res',     categoria: 'PROTEINAS' }, stock: 80,  precioUnitario: 14.0, fechaIngreso: '2026-01-10', fechaCaducidad: '2026-08-01' },
+        { idLote: 22, alimento: { nombre: 'Leche evaporada',  categoria: 'LACTEO'    }, stock: 200, precioUnitario: 3.5,  fechaIngreso: '2026-01-15', fechaCaducidad: '2026-12-01' },
+        { idLote: 23, alimento: { nombre: 'Aceite vegetal',   categoria: 'GRASA'     }, stock: 60,  precioUnitario: 6.0,  fechaIngreso: '2026-01-15', fechaCaducidad: '2027-01-01' },
+        { idLote: 24, alimento: { nombre: 'Azúcar rubia',     categoria: 'CONDIMENTO'}, stock: 100, precioUnitario: 2.8,  fechaIngreso: '2026-02-01', fechaCaducidad: '2027-06-01' }
       ]
     }
   ],
+  cuentaEmpresa: { numero: '00000000000000000001', saldo: 500 },
   responsableData: {
     almacen: {
       lotes: [
-        { idLote: 10, alimento: { nombre: 'Frijoles', categoria: 'LEGUMBRE' }, stock: 80, precioUnitario: 4.0, fechaIngreso: '2025-10-01', fechaCaducidad: '2026-04-01' },
-        { idLote: 11, alimento: { nombre: 'Atún', categoria: 'PROTEINAS' }, stock: 3, precioUnitario: 6.5, fechaIngreso: '2025-11-01', fechaCaducidad: '2026-03-10' }
+        // DESAYUNO
+        { idLote: 1,  alimento: { nombre: 'Leche fresca',      categoria: 'LACTEO'    }, stock: 150, precioUnitario: 3.2,  fechaIngreso: '2026-01-01', fechaCaducidad: '2026-10-01', origen: 'donado'   },
+        { idLote: 2,  alimento: { nombre: 'Pan de molde',       categoria: 'CEREAL'    }, stock: 300, precioUnitario: 1.5,  fechaIngreso: '2026-01-05', fechaCaducidad: '2026-11-01', origen: 'comprado' },
+        { idLote: 3,  alimento: { nombre: 'Huevo',              categoria: 'PROTEINAS' }, stock: 500, precioUnitario: 0.5,  fechaIngreso: '2026-01-10', fechaCaducidad: '2026-06-01', origen: 'donado'   },
+        { idLote: 4,  alimento: { nombre: 'Plátano',            categoria: 'FRUTA'     }, stock: 200, precioUnitario: 0.8,  fechaIngreso: '2026-02-01', fechaCaducidad: '2026-05-01', origen: 'donado'   },
+        { idLote: 5,  alimento: { nombre: 'Avena',              categoria: 'CEREAL'    }, stock: 8,   precioUnitario: 2.0,  fechaIngreso: '2026-01-20', fechaCaducidad: '2026-03-10', origen: 'comprado' },
+        // ALMUERZO
+        { idLote: 6,  alimento: { nombre: 'Arroz blanco',       categoria: 'CEREAL'    }, stock: 400, precioUnitario: 2.5,  fechaIngreso: '2026-01-01', fechaCaducidad: '2027-01-01', origen: 'comprado' },
+        { idLote: 7,  alimento: { nombre: 'Pollo entero',       categoria: 'PROTEINAS' }, stock: 100, precioUnitario: 8.0,  fechaIngreso: '2026-02-01', fechaCaducidad: '2026-08-01', origen: 'comprado' },
+        { idLote: 8,  alimento: { nombre: 'Papa amarilla',      categoria: 'TUBERCULO' }, stock: 250, precioUnitario: 1.2,  fechaIngreso: '2026-01-15', fechaCaducidad: '2026-07-01', origen: 'donado'   },
+        { idLote: 9,  alimento: { nombre: 'Frijoles negros',    categoria: 'LEGUMBRE'  }, stock: 180, precioUnitario: 4.0,  fechaIngreso: '2026-01-01', fechaCaducidad: '2027-03-01', origen: 'donado'   },
+        { idLote: 10, alimento: { nombre: 'Tomate',             categoria: 'VERDURA'   }, stock: 120, precioUnitario: 1.0,  fechaIngreso: '2026-02-10', fechaCaducidad: '2026-04-10', origen: 'donado'   },
+        { idLote: 11, alimento: { nombre: 'Lechuga',            categoria: 'VERDURA'   }, stock: 6,   precioUnitario: 1.5,  fechaIngreso: '2026-02-15', fechaCaducidad: '2026-03-08', origen: 'donado'   },
+        // CENA
+        { idLote: 12, alimento: { nombre: 'Zapallo',            categoria: 'VERDURA'   }, stock: 90,  precioUnitario: 1.8,  fechaIngreso: '2026-01-20', fechaCaducidad: '2026-06-01', origen: 'donado'   },
+        { idLote: 13, alimento: { nombre: 'Camote',             categoria: 'TUBERCULO' }, stock: 160, precioUnitario: 1.0,  fechaIngreso: '2026-01-10', fechaCaducidad: '2026-08-01', origen: 'comprado' },
+        { idLote: 14, alimento: { nombre: 'Atún en lata',       categoria: 'PROTEINAS' }, stock: 200, precioUnitario: 5.5,  fechaIngreso: '2026-01-01', fechaCaducidad: '2027-06-01', origen: 'comprado' },
+        // EXTRAS
+        { idLote: 15, alimento: { nombre: 'Lentejas',           categoria: 'LEGUMBRE'  }, stock: 140, precioUnitario: 3.5,  fechaIngreso: '2026-01-05', fechaCaducidad: '2027-01-01', origen: 'donado'   },
+        { idLote: 16, alimento: { nombre: 'Zanahoria',          categoria: 'VERDURA'   }, stock: 100, precioUnitario: 0.9,  fechaIngreso: '2026-02-01', fechaCaducidad: '2026-07-01', origen: 'donado'   },
+        { idLote: 17, alimento: { nombre: 'Naranja',            categoria: 'FRUTA'     }, stock: 9,   precioUnitario: 0.6,  fechaIngreso: '2026-02-10', fechaCaducidad: '2026-03-15', origen: 'donado'   },
+        { idLote: 18, alimento: { nombre: 'Yuca',               categoria: 'TUBERCULO' }, stock: 70,  precioUnitario: 1.3,  fechaIngreso: '2026-01-20', fechaCaducidad: '2026-06-01', origen: 'comprado' },
+        { idLote: 19, alimento: { nombre: 'Sardina en lata',    categoria: 'PROTEINAS' }, stock: 4,   precioUnitario: 4.2,  fechaIngreso: '2025-10-01', fechaCaducidad: '2026-03-05', origen: 'comprado' }
       ],
       movimientos: []
     },
     lotes: { donados: [], comprados: [] },
-    beneficiarios: []
+    beneficiarios: [
+      { nombre: 'María Quispe',   dni: '45678901', numero: 987001001, edad: 38, id: 'BEN-001', cse: 'PobreExtremo', plan: { kg: 55, desayuno: false, almuerzo: false, cena: false } },
+      { nombre: 'Pedro Huanca',   dni: '45678902', numero: 987001002, edad: 62, id: 'BEN-002', cse: 'Pobre',        plan: { kg: 70, desayuno: true,  almuerzo: false, cena: false } },
+      { nombre: 'Rosa Mamani',    dni: '45678903', numero: 987001003, edad: 7,  id: 'BEN-003', cse: 'PobreExtremo', plan: { kg: 22, desayuno: false, almuerzo: true,  cena: false } },
+      { nombre: 'Luis Condori',   dni: '45678904', numero: 987001004, edad: 45, id: 'BEN-004', cse: 'Pobre',        plan: { kg: 80, desayuno: true,  almuerzo: true,  cena: false } }
+    ],
+    donativos: [
+      { nombre: 'Empresa XYZ', monto: 300, fecha: '2026-01-15' },
+      { nombre: 'Carlos Ramos', monto: 200, fecha: '2026-02-01' }
+    ]
   }
 };
 
-// Carga desde localStorage o usa los valores por defecto
+let usuarios, cuentaEmpresa, responsableData;
+
 function cargarDatos() {
   const u = localStorage.getItem('nutri_usuarios');
-  const r = localStorage.getItem('nutri_responsableData');
+  const c = localStorage.getItem('nutri_cuenta');
+  const r = localStorage.getItem('nutri_resp');
   usuarios = u ? JSON.parse(u) : JSON.parse(JSON.stringify(DEFAULTS.usuarios));
+  cuentaEmpresa = c ? JSON.parse(c) : JSON.parse(JSON.stringify(DEFAULTS.cuentaEmpresa));
   responsableData = r ? JSON.parse(r) : JSON.parse(JSON.stringify(DEFAULTS.responsableData));
 }
 
-// Guarda todo en localStorage
-function guardarDatos() {
-  localStorage.setItem('nutri_usuarios', JSON.stringify(usuarios));
-  localStorage.setItem('nutri_responsableData', JSON.stringify(responsableData));
+function resetearDatos() {
+  if (!confirm('¿Resetear todos los datos y cargar los datos de prueba? Esto borrará cambios actuales.')) return;
+  localStorage.removeItem('nutri_usuarios');
+  localStorage.removeItem('nutri_cuenta');
+  localStorage.removeItem('nutri_resp');
+  location.reload();
 }
 
-// ============================================================
-// DATA STORE
-// ============================================================
-let usuarios = [];
-let responsableData = {};
+function guardarDatos() {
+  localStorage.setItem('nutri_usuarios', JSON.stringify(usuarios));
+  localStorage.setItem('nutri_cuenta', JSON.stringify(cuentaEmpresa));
+  localStorage.setItem('nutri_resp', JSON.stringify(responsableData));
+}
 
-cargarDatos(); // 👈 carga al iniciar
+cargarDatos();
 
 let currentUser = null;
-let selectedLoteIndex = null;
-let currentAlmacenSubTab = 'lotes-almacen';
-let currentLotesRespSubTab = 'donados';
+let selectedLoteForAction = null;
 
 // ============================================================
 // AUTH
 // ============================================================
-function switchTab(tab) {
+function switchAuthTab(tab) {
   document.getElementById('tab-login').style.display = tab === 'login' ? 'block' : 'none';
   document.getElementById('tab-register').style.display = tab === 'register' ? 'block' : 'none';
   document.querySelectorAll('.auth-tab').forEach((t, i) => {
@@ -968,30 +586,18 @@ function switchTab(tab) {
   hideError('auth-error');
 }
 
-document.getElementById('reg-rol').addEventListener('change', function() {
-  document.getElementById('prov-fields').style.display = this.value === 'Proveedor' ? 'block' : 'none';
-});
+function toggleProvFields() {
+  document.getElementById('prov-fields').style.display =
+    document.getElementById('reg-rol').value === 'Proveedor' ? 'block' : 'none';
+}
 
-function showError(id, msg) {
-  const el = document.getElementById(id);
-  el.textContent = msg;
-  el.style.display = 'block';
-}
-function hideError(id) {
-  document.getElementById(id).style.display = 'none';
-}
+function showError(id, msg) { const e = document.getElementById(id); e.textContent = msg; e.style.display = 'block'; }
+function hideError(id) { const e = document.getElementById(id); if(e) e.style.display = 'none'; }
+function showSuccess(id, msg) { const e = document.getElementById(id); e.textContent = msg; e.style.display = 'block'; }
 
 function doLogin() {
   const dni = document.getElementById('login-dni').value.trim();
   const pass = document.getElementById('login-pass').value;
-
-  // Admin fijo — solo tú lo sabes
-  if (dni === 'admin' && pass === 'admin123') {
-    currentUser = { nombre: 'Administrador', dni: 'admin', rol: 'Admin' };
-    initApp();
-    return;
-  }
-
   const user = usuarios.find(u => u.dni === dni && u.contrasena === pass);
   if (!user) { showError('auth-error', 'DNI o contraseña incorrectos.'); return; }
   currentUser = user;
@@ -1003,19 +609,16 @@ function doRegister() {
   const dni = document.getElementById('reg-dni').value.trim();
   const pass = document.getElementById('reg-pass').value;
   const rol = document.getElementById('reg-rol').value;
-
   if (!nombre || !dni || !pass) { showError('auth-error', 'Completa todos los campos.'); return; }
-  if (dni.length !== 8 || isNaN(dni)) { showError('auth-error', 'El DNI debe tener 8 dígitos.'); return; }
+  if (!/^\d{8}$/.test(dni)) { showError('auth-error', 'El DNI debe tener exactamente 8 dígitos.'); return; }
   if (pass.length < 6) { showError('auth-error', 'La contraseña debe tener mínimo 6 caracteres.'); return; }
   if (usuarios.find(u => u.dni === dni)) { showError('auth-error', 'El DNI ya está registrado.'); return; }
 
   const newUser = { nombre, dni, contrasena: pass, rol };
   if (rol === 'Proveedor') {
-    const tipoRel = document.getElementById('reg-tiporel').value;
     const cuenta = document.getElementById('reg-cuenta').value.trim();
     const saldo = parseFloat(document.getElementById('reg-saldo').value) || 0;
-    if (!cuenta) { showError('auth-error', 'Ingresa el número de cuenta.'); return; }
-    newUser.tipoRel = tipoRel;
+    if (!/^\d{20}$/.test(cuenta)) { showError('auth-error', 'La cuenta debe tener exactamente 20 dígitos.'); return; }
     newUser.cuentaBancaria = { numero: cuenta, saldo };
     newUser.listaLotes = [];
   }
@@ -1039,34 +642,34 @@ function doLogout() {
 function initApp() {
   document.getElementById('auth-screen').style.display = 'none';
   document.getElementById('app-screen').style.display = 'block';
-
   document.getElementById('user-name-display').textContent = currentUser.nombre;
   document.getElementById('user-role-display').textContent = currentUser.rol;
   document.getElementById('user-avatar').textContent = currentUser.nombre[0].toUpperCase();
 
-  buildNav();
-
-  if (currentUser.rol === 'Admin') {
-    navigateTo('admin-usuarios');
-  } else if (currentUser.rol === 'Proveedor') {
-    navigateTo('mis-lotes');
+  const cuentaEl = document.getElementById('sidebar-cuenta-empresa');
+  if (currentUser.rol === 'Responsable') {
+    cuentaEl.style.display = 'block';
+    updateSaldoDisplay();
   } else {
-    navigateTo('almacen');
+    cuentaEl.style.display = 'none';
   }
+
+  buildNav();
+  if (currentUser.rol === 'Proveedor') navigateTo('mis-lotes');
+  else navigateTo('almacen');
+}
+
+function updateSaldoDisplay() {
+  const s = `S/. ${cuentaEmpresa.saldo.toFixed(2)}`;
+  const el = document.getElementById('sidebar-saldo');
+  if (el) el.textContent = s;
 }
 
 function buildNav() {
   const nav = document.getElementById('nav-menu');
   nav.innerHTML = '';
-
   let items = [];
-  if (currentUser.rol === 'Admin') {
-    items = [
-      { id: 'admin-usuarios', icon: '👤', label: 'Usuarios' },
-      { id: 'admin-lotes', icon: '📦', label: 'Lotes' },
-      { id: 'admin-beneficiarios', icon: '👥', label: 'Beneficiarios' },
-    ];
-  } else if (currentUser.rol === 'Proveedor') {
+  if (currentUser.rol === 'Proveedor') {
     items = [
       { id: 'mis-lotes', icon: '📦', label: 'Mis Lotes' },
       { id: 'alertas', icon: '🔔', label: 'Alertas', badge: getProveedorAlertas().length || null },
@@ -1075,11 +678,12 @@ function buildNav() {
     items = [
       { id: 'almacen', icon: '🏪', label: 'Almacén' },
       { id: 'lotes-resp', icon: '📦', label: 'Lotes' },
+      { id: 'donativos', icon: '💰', label: 'Donativos' },
       { id: 'beneficiarios', icon: '👥', label: 'Beneficiarios' },
+      { id: 'menu', icon: '🍽️', label: 'Menú Diario' },
       { id: 'alertas', icon: '🔔', label: 'Alertas', badge: getRespAlertas().length || null },
     ];
   }
-
   items.forEach(item => {
     const btn = document.createElement('button');
     btn.className = 'nav-item';
@@ -1095,83 +699,70 @@ function navigateTo(pageId) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('page-' + pageId)?.classList.add('active');
   document.getElementById('nav-' + pageId)?.classList.add('active');
-
-  if (pageId === 'mis-lotes') renderMisLotes();
-  if (pageId === 'almacen') renderAlmacen();
-  if (pageId === 'lotes-resp') renderLotesResp();
-  if (pageId === 'beneficiarios') renderBeneficiarios();
-  if (pageId === 'alertas') renderAlertas();
-  if (pageId === 'admin-usuarios') renderAdminUsuarios();
-  if (pageId === 'admin-lotes') renderAdminLotes();
-  if (pageId === 'admin-beneficiarios') renderAdminBeneficiarios();
+  const renders = {
+    'mis-lotes': renderMisLotes,
+    'almacen': renderAlmacen,
+    'lotes-resp': renderLotesResp,
+    'donativos': renderDonativos,
+    'beneficiarios': renderBeneficiarios,
+    'menu': renderMenuPage,
+    'alertas': renderAlertas
+  };
+  if (renders[pageId]) renders[pageId]();
 }
 
 // ============================================================
 // UTILS
 // ============================================================
-function formatDate(d) {
-  if (!d) return '—';
-  return new Date(d).toLocaleDateString('es-PE');
+function formatDate(d) { if (!d) return '—'; return new Date(d).toLocaleDateString('es-PE'); }
+function daysUntil(dateStr) { return Math.ceil((new Date(dateStr) - new Date()) / (1000*60*60*24)); }
+function isExpiringSoon(d) { const x = daysUntil(d); return x <= 30 && x > 0; }
+function isExpired(d) { return daysUntil(d) <= 0; }
+function isLowStock(s) { return s <= 10; }
+
+function estadoBadge(l) {
+  if (isExpired(l.fechaCaducidad)) return '<span class="badge badge-red">Vencido</span>';
+  if (isExpiringSoon(l.fechaCaducidad)) return '<span class="badge badge-orange">Vence pronto</span>';
+  if (isLowStock(l.stock)) return '<span class="badge badge-red">Stock bajo</span>';
+  return '<span class="badge badge-green">OK</span>';
 }
-function daysUntil(dateStr) {
-  const diff = new Date(dateStr) - new Date();
-  return Math.ceil(diff / (1000 * 60 * 60 * 24));
-}
-function isExpiringSoon(dateStr) { return daysUntil(dateStr) <= 30 && daysUntil(dateStr) > 0; }
-function isExpired(dateStr) { return daysUntil(dateStr) <= 0; }
-function isLowStock(stock) { return stock <= 10; }
 
 // ============================================================
 // ALERTAS
 // ============================================================
 function getProveedorAlertas() {
-  const alertas = [];
-  if (!currentUser?.listaLotes) return alertas;
-  currentUser.listaLotes.forEach(l => {
-    if (isLowStock(l.stock)) alertas.push({ type: 'danger', title: `Stock agotado: ${l.alimento.nombre}`, desc: `Lote #${l.idLote} — Solo quedan ${l.stock} unidades` });
-    if (isExpiringSoon(l.fechaCaducidad)) alertas.push({ type: 'warn', title: `Próximo a vencer: ${l.alimento.nombre}`, desc: `Lote #${l.idLote} — Vence en ${daysUntil(l.fechaCaducidad)} días (${formatDate(l.fechaCaducidad)})` });
-    if (isExpired(l.fechaCaducidad)) alertas.push({ type: 'danger', title: `Lote vencido: ${l.alimento.nombre}`, desc: `Lote #${l.idLote} — Venció el ${formatDate(l.fechaCaducidad)}` });
+  const a = [];
+  (currentUser?.listaLotes || []).forEach(l => {
+    if (isLowStock(l.stock)) a.push({ type:'danger', title:`Stock bajo: ${l.alimento.nombre}`, desc:`Lote #${l.idLote} — ${l.stock} unidades` });
+    if (isExpiringSoon(l.fechaCaducidad)) a.push({ type:'warn', title:`Vence pronto: ${l.alimento.nombre}`, desc:`Lote #${l.idLote} — Vence en ${daysUntil(l.fechaCaducidad)} días` });
+    if (isExpired(l.fechaCaducidad)) a.push({ type:'danger', title:`Vencido: ${l.alimento.nombre}`, desc:`Lote #${l.idLote} — Venció el ${formatDate(l.fechaCaducidad)}` });
   });
-  return alertas;
+  return a;
 }
 function getRespAlertas() {
-  const alertas = [];
-  const allLotes = [...responsableData.almacen.lotes, ...responsableData.lotes.donados, ...responsableData.lotes.comprados];
-  allLotes.forEach(l => {
-    if (isLowStock(l.stock)) alertas.push({ type: 'danger', title: `Stock bajo: ${l.alimento.nombre}`, desc: `Lote #${l.idLote} — Solo quedan ${l.stock} unidades` });
-    if (isExpiringSoon(l.fechaCaducidad)) alertas.push({ type: 'warn', title: `Próximo a vencer: ${l.alimento.nombre}`, desc: `Lote #${l.idLote} — Vence en ${daysUntil(l.fechaCaducidad)} días` });
-    if (isExpired(l.fechaCaducidad)) alertas.push({ type: 'danger', title: `Lote vencido: ${l.alimento.nombre}`, desc: `Lote #${l.idLote} — Venció el ${formatDate(l.fechaCaducidad)}` });
+  const a = [];
+  responsableData.almacen.lotes.forEach(l => {
+    if (isLowStock(l.stock)) a.push({ type:'danger', title:`Stock bajo: ${l.alimento.nombre}`, desc:`Lote #${l.idLote} — ${l.stock} unidades` });
+    if (isExpiringSoon(l.fechaCaducidad)) a.push({ type:'warn', title:`Vence pronto: ${l.alimento.nombre}`, desc:`Lote #${l.idLote} — Vence en ${daysUntil(l.fechaCaducidad)} días` });
+    if (isExpired(l.fechaCaducidad)) a.push({ type:'danger', title:`Vencido: ${l.alimento.nombre}`, desc:`Lote #${l.idLote} — Venció el ${formatDate(l.fechaCaducidad)}` });
   });
-  return alertas;
+  return a;
 }
 function renderAlertasContainer(containerId, alertas) {
   const el = document.getElementById(containerId);
-  if (!el) return;
-  if (!alertas.length) { el.innerHTML = ''; return; }
+  if (!el || !alertas.length) { if(el) el.innerHTML=''; return; }
   el.innerHTML = alertas.map(a => `
     <div class="alert-item alert-${a.type}">
-      <div class="alert-icon">${a.type === 'danger' ? '🚨' : '⚠️'}</div>
-      <div class="alert-content">
-        <div class="alert-title">${a.title}</div>
-        <div class="alert-desc">${a.desc}</div>
-      </div>
+      <div class="alert-icon">${a.type==='danger'?'🚨':'⚠️'}</div>
+      <div class="alert-content"><div class="alert-title">${a.title}</div><div class="alert-desc">${a.desc}</div></div>
     </div>`).join('');
 }
 function renderAlertas() {
   const alertas = currentUser.rol === 'Proveedor' ? getProveedorAlertas() : getRespAlertas();
   const el = document.getElementById('all-alertas');
-  if (!alertas.length) {
-    el.innerHTML = '<div class="empty-state"><div class="empty-icon">✅</div><div class="empty-text">No hay alertas activas</div></div>';
-  } else {
-    el.innerHTML = alertas.map(a => `
-      <div class="alert-item alert-${a.type}">
-        <div class="alert-icon">${a.type === 'danger' ? '🚨' : '⚠️'}</div>
-        <div class="alert-content">
-          <div class="alert-title">${a.title}</div>
-          <div class="alert-desc">${a.desc}</div>
-        </div>
-      </div>`).join('');
-  }
+  el.innerHTML = alertas.length
+    ? alertas.map(a => `<div class="alert-item alert-${a.type}"><div class="alert-icon">${a.type==='danger'?'🚨':'⚠️'}</div><div class="alert-content"><div class="alert-title">${a.title}</div><div class="alert-desc">${a.desc}</div></div></div>`).join('')
+    : '<div class="empty-state"><div class="empty-icon">✅</div><div class="empty-text">No hay alertas activas</div></div>';
 }
 
 // ============================================================
@@ -1179,30 +770,22 @@ function renderAlertas() {
 // ============================================================
 function renderMisLotes() {
   renderAlertasContainer('alertas-proveedor', getProveedorAlertas());
-  const grid = document.getElementById('lotes-grid');
   const lotes = currentUser.listaLotes || [];
+  const grid = document.getElementById('lotes-grid');
   if (!lotes.length) {
-    grid.innerHTML = '<div class="empty-state"><div class="empty-icon">📦</div><div class="empty-text">No tienes lotes registrados. Agrega uno.</div></div>';
+    grid.innerHTML = '<div class="empty-state"><div class="empty-icon">📦</div><div class="empty-text">No tienes lotes. Agrega uno.</div></div>';
     return;
   }
-  grid.innerHTML = lotes.map((l, i) => {
-    let estado = '<span class="badge badge-green">Disponible</span>';
-    if (isExpired(l.fechaCaducidad)) estado = '<span class="badge badge-red">Vencido</span>';
-    else if (isExpiringSoon(l.fechaCaducidad)) estado = '<span class="badge badge-orange">Vence pronto</span>';
-    else if (isLowStock(l.stock)) estado = '<span class="badge badge-red">Stock bajo</span>';
-    return `
+  grid.innerHTML = lotes.map((l, i) => `
     <div class="lote-card">
       <div class="lote-card-header">
-        <div>
-          <div class="lote-name">${l.alimento.nombre}</div>
-          <div class="lote-id">Lote #${l.idLote} · ${l.alimento.categoria}</div>
-        </div>
-        ${estado}
+        <div><div class="lote-name">${l.alimento.nombre}</div><div class="lote-id">Lote #${l.idLote} · ${l.alimento.categoria}</div></div>
+        ${estadoBadge(l)}
       </div>
       <div class="lote-info">
         <div class="lote-info-row"><span class="lote-info-label">Stock</span><span>${l.stock} u.</span></div>
         <div class="lote-info-row"><span class="lote-info-label">P. Unitario</span><span>S/. ${l.precioUnitario.toFixed(2)}</span></div>
-        <div class="lote-info-row"><span class="lote-info-label">P. Total</span><span>S/. ${(l.stock * l.precioUnitario).toFixed(2)}</span></div>
+        <div class="lote-info-row"><span class="lote-info-label">P. Total</span><span>S/. ${(l.stock*l.precioUnitario).toFixed(2)}</span></div>
         <div class="lote-info-row"><span class="lote-info-label">Ingreso</span><span>${formatDate(l.fechaIngreso)}</span></div>
         <div class="lote-info-row"><span class="lote-info-label">Caducidad</span><span>${formatDate(l.fechaCaducidad)}</span></div>
       </div>
@@ -1210,8 +793,7 @@ function renderMisLotes() {
         <button class="btn btn-accent btn-sm" onclick="openVender(${i})">💰 Vender</button>
         <button class="btn btn-warn btn-sm" onclick="openDonar(${i})">🤝 Donar</button>
       </div>
-    </div>`;
-  }).join('');
+    </div>`).join('');
   buildNav();
 }
 
@@ -1223,47 +805,38 @@ function agregarLote() {
   const precio = parseFloat(document.getElementById('lote-precio').value);
   const ingreso = document.getElementById('lote-ingreso').value;
   const caducidad = document.getElementById('lote-caducidad').value;
-
-  if (!id || !nombre || isNaN(stock) || isNaN(precio) || !ingreso || !caducidad) {
-    showError('modal-lote-error', 'Completa todos los campos.'); return;
-  }
-  if (id <= 0) { showError('modal-lote-error', 'El ID debe ser mayor que 0.'); return; }
-  if (stock < 0) { showError('modal-lote-error', 'El stock no puede ser negativo.'); return; }
-  if (precio < 0) { showError('modal-lote-error', 'El precio no puede ser negativo.'); return; }
-  if (caducidad <= ingreso) { showError('modal-lote-error', 'La caducidad debe ser posterior al ingreso.'); return; }
-
-  currentUser.listaLotes.push({ idLote: id, alimento: { nombre, categoria }, stock, precioUnitario: precio, fechaIngreso: ingreso, fechaCaducidad: caducidad });
-  guardarDatos();
-  closeModal('modal-add-lote');
-  renderMisLotes();
+  if (!id||!nombre||isNaN(stock)||isNaN(precio)||!ingreso||!caducidad) { showError('modal-lote-error','Completa todos los campos.'); return; }
+  if (id<=0) { showError('modal-lote-error','El ID debe ser mayor que 0.'); return; }
+  if (stock<0) { showError('modal-lote-error','El stock no puede ser negativo.'); return; }
+  if (precio<0) { showError('modal-lote-error','El precio no puede ser negativo.'); return; }
+  if (caducidad<=ingreso) { showError('modal-lote-error','La caducidad debe ser posterior al ingreso.'); return; }
+  currentUser.listaLotes.push({ idLote:id, alimento:{nombre,categoria}, stock, precioUnitario:precio, fechaIngreso:ingreso, fechaCaducidad:caducidad });
+  guardarDatos(); closeModal('modal-add-lote'); renderMisLotes();
 }
 
-let selectedLoteForAction = null;
 function openVender(i) {
   selectedLoteForAction = i;
   const l = currentUser.listaLotes[i];
-  document.getElementById('vender-info').innerHTML = `<strong>${l.alimento.nombre}</strong> — Lote #${l.idLote}<br>Stock: ${l.stock} u. · Total: S/. ${(l.stock * l.precioUnitario).toFixed(2)}`;
+  document.getElementById('vender-info').innerHTML = `<strong>${l.alimento.nombre}</strong> — Lote #${l.idLote}<br>Stock: ${l.stock} u. · Total a cobrar: <strong style="color:var(--accent)">S/. ${(l.stock*l.precioUnitario).toFixed(2)}</strong><br>Se depositará en tu cuenta bancaria`;
   openModal('modal-vender');
 }
 function confirmarVenta() {
   const lote = currentUser.listaLotes.splice(selectedLoteForAction, 1)[0];
   currentUser.cuentaBancaria.saldo += lote.stock * lote.precioUnitario;
-  guardarDatos();
-  closeModal('modal-vender');
-  renderMisLotes();
+  guardarDatos(); closeModal('modal-vender'); renderMisLotes();
 }
 function openDonar(i) {
   selectedLoteForAction = i;
   const l = currentUser.listaLotes[i];
-  document.getElementById('donar-info').innerHTML = `<strong>${l.alimento.nombre}</strong> — Lote #${l.idLote}<br>Stock: ${l.stock} u.`;
+  document.getElementById('donar-info').innerHTML = `<strong>${l.alimento.nombre}</strong> — Lote #${l.idLote}<br>Stock: ${l.stock} u.<br>Se transferirá al almacén de la empresa sin costo`;
   openModal('modal-donar');
 }
 function confirmarDonacion() {
   const lote = currentUser.listaLotes.splice(selectedLoteForAction, 1)[0];
-  responsableData.lotes.donados.push(lote);
-  guardarDatos();
-  closeModal('modal-donar');
-  renderMisLotes();
+  lote.origen = 'donado';
+  responsableData.lotes.donados.push({ ...lote, donante: currentUser.nombre });
+  responsableData.almacen.lotes.push({ ...lote });
+  guardarDatos(); closeModal('modal-donar'); renderMisLotes();
 }
 
 // ============================================================
@@ -1272,262 +845,230 @@ function confirmarDonacion() {
 function renderAlmacen() {
   renderAlertasContainer('alertas-almacen', getRespAlertas());
   const lotes = responsableData.almacen.lotes;
-
-  // Stats
-  const totalStock = lotes.reduce((s, l) => s + l.stock, 0);
-  const valorTotal = lotes.reduce((s, l) => s + l.stock * l.precioUnitario, 0);
+  const totalStock = lotes.reduce((s,l)=>s+l.stock,0);
+  const valorTotal = lotes.reduce((s,l)=>s+l.stock*l.precioUnitario,0);
   document.getElementById('stats-almacen').innerHTML = `
-    <div class="stat-card"><div class="stat-value">${lotes.length}</div><div class="stat-label">Lotes en almacén</div></div>
+    <div class="stat-card highlight"><div class="stat-value">${lotes.length}</div><div class="stat-label">Lotes en almacén</div></div>
     <div class="stat-card"><div class="stat-value">${totalStock}</div><div class="stat-label">Unidades totales</div></div>
     <div class="stat-card"><div class="stat-value">S/.${valorTotal.toFixed(0)}</div><div class="stat-label">Valor total</div></div>
     <div class="stat-card"><div class="stat-value">${responsableData.almacen.movimientos.length}</div><div class="stat-label">Movimientos</div></div>
   `;
-
-  // Tabla lotes
   const tbody = document.getElementById('tabla-almacen');
-  if (!lotes.length) {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:32px">No hay lotes en el almacén</td></tr>';
-  } else {
-    tbody.innerHTML = lotes.map(l => {
-      let estadoBadge = '<span class="badge badge-green">OK</span>';
-      if (isExpired(l.fechaCaducidad)) estadoBadge = '<span class="badge badge-red">Vencido</span>';
-      else if (isExpiringSoon(l.fechaCaducidad)) estadoBadge = '<span class="badge badge-orange">Vence pronto</span>';
-      else if (isLowStock(l.stock)) estadoBadge = '<span class="badge badge-red">Stock bajo</span>';
-      return `<tr>
-        <td>#${l.idLote}</td>
-        <td>${l.alimento.nombre}</td>
+  tbody.innerHTML = lotes.length
+    ? lotes.map(l => `<tr>
+        <td>#${l.idLote}</td><td><strong>${l.alimento.nombre}</strong></td>
         <td><span class="badge badge-blue">${l.alimento.categoria}</span></td>
-        <td>${l.stock}</td>
-        <td>${formatDate(l.fechaCaducidad)}</td>
+        <td>${l.stock}</td><td>${formatDate(l.fechaCaducidad)}</td>
         <td>S/. ${l.precioUnitario.toFixed(2)}</td>
-        <td>${estadoBadge}</td>
-      </tr>`;
-    }).join('');
-  }
+        <td><span class="badge ${l.origen==='donado'?'badge-green':'badge-blue'}">${l.origen==='donado'?'Donado':'Comprado'}</span></td>
+        <td>${estadoBadge(l)}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:32px">No hay lotes en el almacén</td></tr>';
 
-  // Tabla movimientos
   const movs = responsableData.almacen.movimientos;
-  const tmov = document.getElementById('tabla-movimientos');
-  if (!movs.length) {
-    tmov.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:32px">No hay movimientos registrados</td></tr>';
-  } else {
-    tmov.innerHTML = movs.map(m => `<tr>
-      <td>${formatDate(m.fecha)}</td>
-      <td><span class="badge ${m.tipo === 'Entrada' ? 'badge-green' : 'badge-orange'}">${m.tipo}</span></td>
-      <td>${m.alimento}</td>
-      <td>${m.cantidad}</td>
-    </tr>`).join('');
-  }
-
-  // Populate select de movimientos
-  const sel = document.getElementById('mov-lote');
-  sel.innerHTML = lotes.map((l, i) => `<option value="${i}">${l.alimento.nombre} (Lote #${l.idLote}) — Stock: ${l.stock}</option>`).join('');
+  document.getElementById('tabla-movimientos').innerHTML = movs.length
+    ? movs.map(m=>`<tr>
+        <td>${formatDate(m.fecha)}</td>
+        <td><span class="badge ${m.tipo==='Entrada'?'badge-green':'badge-orange'}">${m.tipo}</span></td>
+        <td>${m.alimento}</td><td>${m.cantidad}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:32px">No hay movimientos</td></tr>';
 }
 
+function prepMovModal() {
+  const sel = document.getElementById('mov-lote');
+  sel.innerHTML = responsableData.almacen.lotes.map((l,i)=>
+    `<option value="${i}">${l.alimento.nombre} (Lote #${l.idLote}) — Stock: ${l.stock}</option>`).join('');
+}
 function registrarMovimiento() {
   const tipo = document.getElementById('mov-tipo').value;
   const loteIdx = parseInt(document.getElementById('mov-lote').value);
   const cantidad = parseInt(document.getElementById('mov-cantidad').value);
-
-  if (!cantidad || cantidad <= 0) { showError('modal-mov-error', 'Ingresa una cantidad válida.'); return; }
-
+  if (!cantidad||cantidad<=0) { showError('modal-mov-error','Ingresa una cantidad válida.'); return; }
   const lote = responsableData.almacen.lotes[loteIdx];
-  if (tipo === 'Salida' && lote.stock < cantidad) {
-    showError('modal-mov-error', `Stock insuficiente. Stock actual: ${lote.stock}`); return;
-  }
-
-  if (tipo === 'Entrada') lote.stock += cantidad;
-  else lote.stock -= cantidad;
-
-  responsableData.almacen.movimientos.unshift({ fecha: new Date(), tipo, alimento: lote.alimento.nombre, cantidad });
-  guardarDatos();
-  closeModal('modal-movimiento');
-  renderAlmacen();
+  if (tipo==='Salida'&&lote.stock<cantidad) { showError('modal-mov-error',`Stock insuficiente. Disponible: ${lote.stock}`); return; }
+  if (tipo==='Entrada') lote.stock+=cantidad; else lote.stock-=cantidad;
+  responsableData.almacen.movimientos.unshift({ fecha:new Date(), tipo, alimento:lote.alimento.nombre, cantidad });
+  guardarDatos(); closeModal('modal-movimiento'); renderAlmacen();
 }
 
 // ============================================================
 // RESPONSABLE — LOTES
 // ============================================================
 function renderLotesResp() {
-  renderLoteGrid('lotes-donados-grid', responsableData.lotes.donados, false);
-  renderLoteGrid('lotes-comprados-grid', responsableData.lotes.comprados, false);
+  renderLoteGrid('lotes-donados-grid', responsableData.lotes.donados, 'donado');
+  renderLoteGrid('lotes-comprados-grid', responsableData.lotes.comprados, 'comprado');
+}
+function renderLoteGrid(id, lotes, origen) {
+  const el = document.getElementById(id);
+  el.innerHTML = lotes.length
+    ? lotes.map(l=>`
+      <div class="lote-card">
+        <div class="lote-card-header">
+          <div><div class="lote-name">${l.alimento.nombre}</div>
+          <div class="lote-id">Lote #${l.idLote} · ${l.alimento.categoria}</div></div>
+          ${estadoBadge(l)}
+        </div>
+        <div class="lote-info">
+          <div class="lote-info-row"><span class="lote-info-label">Stock</span><span>${l.stock} u.</span></div>
+          <div class="lote-info-row"><span class="lote-info-label">Caducidad</span><span>${formatDate(l.fechaCaducidad)}</span></div>
+          <div class="lote-info-row"><span class="lote-info-label">P. Unitario</span><span>S/. ${l.precioUnitario.toFixed(2)}</span></div>
+          ${l.donante?`<div class="lote-info-row"><span class="lote-info-label">Donante</span><span>${l.donante}</span></div>`:''}
+          ${l.proveedor?`<div class="lote-info-row"><span class="lote-info-label">Proveedor</span><span>${l.proveedor}</span></div>`:''}
+        </div>
+      </div>`).join('')
+    : `<div class="empty-state"><div class="empty-icon">📦</div><div class="empty-text">No hay lotes ${origen === 'donado' ? 'donados' : 'comprados'} aún</div></div>`;
+}
 
-  // Populate proveedor select
+function prepComprarModal() {
+  document.getElementById('comprar-saldo-empresa').textContent = `S/. ${cuentaEmpresa.saldo.toFixed(2)}`;
   const provSel = document.getElementById('comprar-proveedor');
-  const proveedores = usuarios.filter(u => u.rol === 'Proveedor');
+  const proveedores = usuarios.filter(u=>u.rol==='Proveedor');
   provSel.innerHTML = proveedores.length
-    ? proveedores.map((p, i) => `<option value="${i}">${p.nombre}</option>`).join('')
+    ? proveedores.map((p,i)=>`<option value="${i}">${p.nombre}</option>`).join('')
     : '<option>No hay proveedores</option>';
   if (proveedores.length) actualizarLotesProveedor();
 }
-
-function renderLoteGrid(containerId, lotes, showActions) {
-  const el = document.getElementById(containerId);
-  if (!lotes.length) {
-    el.innerHTML = '<div class="empty-state"><div class="empty-icon">📦</div><div class="empty-text">No hay lotes aquí todavía</div></div>';
-    return;
-  }
-  el.innerHTML = lotes.map(l => `
-    <div class="lote-card">
-      <div class="lote-card-header">
-        <div>
-          <div class="lote-name">${l.alimento.nombre}</div>
-          <div class="lote-id">Lote #${l.idLote} · ${l.alimento.categoria}</div>
-        </div>
-        <span class="badge badge-blue">${l.alimento.categoria}</span>
-      </div>
-      <div class="lote-info">
-        <div class="lote-info-row"><span class="lote-info-label">Stock</span><span>${l.stock} u.</span></div>
-        <div class="lote-info-row"><span class="lote-info-label">Caducidad</span><span>${formatDate(l.fechaCaducidad)}</span></div>
-        <div class="lote-info-row"><span class="lote-info-label">P. Unitario</span><span>S/. ${l.precioUnitario.toFixed(2)}</span></div>
-      </div>
-    </div>`).join('');
-}
-
 function actualizarLotesProveedor() {
-  const proveedores = usuarios.filter(u => u.rol === 'Proveedor');
+  const proveedores = usuarios.filter(u=>u.rol==='Proveedor');
   const pIdx = parseInt(document.getElementById('comprar-proveedor').value);
   const prov = proveedores[pIdx];
-  const loteSel = document.getElementById('comprar-lote-select');
-  const infoEl = document.getElementById('comprar-lote-info');
-
-  if (!prov || !prov.listaLotes?.length) {
-    loteSel.innerHTML = '<option>No tiene lotes disponibles</option>';
-    infoEl.style.display = 'none';
-    return;
-  }
-  loteSel.innerHTML = prov.listaLotes.map((l, i) => `<option value="${i}">${l.alimento.nombre} — Stock: ${l.stock} — S/. ${l.precioUnitario.toFixed(2)}/u</option>`).join('');
+  const sel = document.getElementById('comprar-lote-select');
+  const info = document.getElementById('comprar-lote-info');
+  if (!prov?.listaLotes?.length) { sel.innerHTML='<option>Sin lotes disponibles</option>'; info.style.display='none'; return; }
+  sel.innerHTML = prov.listaLotes.map((l,i)=>`<option value="${i}">${l.alimento.nombre} (Lote #${l.idLote}) — ${l.stock} u.</option>`).join('');
   actualizarInfoLote();
-  loteSel.onchange = actualizarInfoLote;
 }
-
 function actualizarInfoLote() {
-  const proveedores = usuarios.filter(u => u.rol === 'Proveedor');
+  const proveedores = usuarios.filter(u=>u.rol==='Proveedor');
   const pIdx = parseInt(document.getElementById('comprar-proveedor').value);
   const lIdx = parseInt(document.getElementById('comprar-lote-select').value);
   const prov = proveedores[pIdx];
   const lote = prov?.listaLotes?.[lIdx];
-  const infoEl = document.getElementById('comprar-lote-info');
-  if (!lote) { infoEl.style.display = 'none'; return; }
-  infoEl.style.display = 'block';
-  infoEl.innerHTML = `Total a pagar: <strong style="color:var(--accent)">S/. ${(lote.stock * lote.precioUnitario).toFixed(2)}</strong> · Saldo proveedor: S/. ${prov.cuentaBancaria.saldo.toFixed(2)}`;
+  const info = document.getElementById('comprar-lote-info');
+  if (!lote) { info.style.display='none'; return; }
+  const costo = lote.stock * lote.precioUnitario;
+  const puedeComprar = cuentaEmpresa.saldo >= costo;
+  info.style.display = 'block';
+  info.innerHTML = `Costo total: <strong style="color:var(--accent)">S/. ${costo.toFixed(2)}</strong><br>
+    Saldo empresa: <strong style="color:${puedeComprar?'var(--accent)':'var(--danger)'}">S/. ${cuentaEmpresa.saldo.toFixed(2)}</strong><br>
+    ${puedeComprar?'<span style="color:var(--accent)">✓ Fondos suficientes</span>':'<span style="color:var(--danger)">✗ Fondos insuficientes — Registra donativos primero</span>'}`;
 }
-
 function comprarLote() {
-  const proveedores = usuarios.filter(u => u.rol === 'Proveedor');
+  const proveedores = usuarios.filter(u=>u.rol==='Proveedor');
   const pIdx = parseInt(document.getElementById('comprar-proveedor').value);
   const lIdx = parseInt(document.getElementById('comprar-lote-select').value);
   const prov = proveedores[pIdx];
-  if (!prov?.listaLotes?.length) { showError('modal-comprar-error', 'No hay lotes disponibles.'); return; }
+  if (!prov?.listaLotes?.length) { showError('modal-comprar-error','No hay lotes disponibles.'); return; }
   const lote = prov.listaLotes[lIdx];
   const costo = lote.stock * lote.precioUnitario;
-
-  // En este demo el responsable "siempre puede" pero validamos con saldo del proveedor como referencia
+  if (cuentaEmpresa.saldo < costo) {
+    showError('modal-comprar-error',`Saldo insuficiente. Se necesitan S/. ${costo.toFixed(2)} y hay S/. ${cuentaEmpresa.saldo.toFixed(2)}.`); return;
+  }
+  cuentaEmpresa.saldo -= costo;
   prov.listaLotes.splice(lIdx, 1);
   prov.cuentaBancaria.saldo += costo;
-  responsableData.lotes.comprados.push(lote);
-  responsableData.almacen.lotes.push(lote);
+  const loteComprado = { ...lote, origen:'comprado', proveedor:prov.nombre };
+  responsableData.lotes.comprados.push(loteComprado);
+  responsableData.almacen.lotes.push({ ...loteComprado });
   guardarDatos();
+  updateSaldoDisplay();
   closeModal('modal-comprar-lote');
   renderLotesResp();
-  renderAlmacen();
+}
+
+// ============================================================
+// RESPONSABLE — DONATIVOS
+// ============================================================
+function renderDonativos() {
+  const donativos = responsableData.donativos || [];
+  const total = donativos.reduce((s,d)=>s+d.monto,0);
+  document.getElementById('donativo-saldo-total').textContent = `S/. ${cuentaEmpresa.saldo.toFixed(2)}`;
+  document.getElementById('donativo-cuenta-num').textContent = `Cuenta: ${cuentaEmpresa.numero}`;
+  document.getElementById('donativo-total-recaudado').textContent = `S/. ${total.toFixed(2)}`;
+  document.getElementById('donativo-count').textContent = `${donativos.length} donativo${donativos.length!==1?'s':''} registrado${donativos.length!==1?'s':''}`;
+  const tbody = document.getElementById('tabla-donativos');
+  tbody.innerHTML = donativos.length
+    ? [...donativos].reverse().map((d,i)=>`<tr>
+        <td>${donativos.length-i}</td>
+        <td><strong>${d.nombre}</strong></td>
+        <td><span style="color:var(--accent);font-weight:700">S/. ${d.monto.toFixed(2)}</span></td>
+        <td>${formatDate(d.fecha)}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:32px">No hay donativos registrados</td></tr>';
+}
+
+function registrarDonativo() {
+  const nombre = document.getElementById('don-nombre').value.trim();
+  const monto = parseFloat(document.getElementById('don-monto').value);
+  hideError('modal-don-error'); hideError('modal-don-success');
+  if (!nombre) { showError('modal-don-error','Ingresa el nombre del donante.'); return; }
+  if (!monto||monto<=0) { showError('modal-don-error','El monto debe ser mayor a 0.'); return; }
+  if (!responsableData.donativos) responsableData.donativos = [];
+  responsableData.donativos.push({ nombre, monto, fecha: new Date() });
+  cuentaEmpresa.saldo += monto;
+  guardarDatos();
+  updateSaldoDisplay();
+  showSuccess('modal-don-success', `✓ Donativo de S/. ${monto.toFixed(2)} registrado. Saldo empresa: S/. ${cuentaEmpresa.saldo.toFixed(2)}`);
+  document.getElementById('don-nombre').value = '';
+  document.getElementById('don-monto').value = '';
+  setTimeout(()=>{ closeModal('modal-add-donativo'); renderDonativos(); }, 1500);
 }
 
 // ============================================================
 // RESPONSABLE — BENEFICIARIOS
 // ============================================================
-function caloriasDiarias(kg) {
-  if (kg <= 5) return 500; if (kg <= 10) return 700; if (kg <= 15) return 1200;
-  if (kg <= 20) return 1600; if (kg <= 30) return 1900; if (kg <= 40) return 2200;
-  if (kg <= 50) return 2400; if (kg <= 60) return 2600; if (kg <= 70) return 2800;
-  if (kg <= 80) return 3000; if (kg <= 90) return 3200; return 3400;
-}
-function protesDiarias(kg) {
-  if (kg <= 5) return 10; if (kg <= 10) return 15; if (kg <= 15) return 25;
-  if (kg <= 20) return 35; if (kg <= 30) return 45; if (kg <= 40) return 55;
-  if (kg <= 50) return 65; if (kg <= 60) return 75; if (kg <= 70) return 85;
-  if (kg <= 80) return 95; if (kg <= 90) return 105; return 110;
-}
-function caloriasFaltantes(kg, d, a, c) {
-  let cal = caloriasDiarias(kg);
-  if (d) cal -= cal * 0.3; if (a) cal -= cal * 0.4; if (c) cal -= cal * 0.3;
-  return Math.round(cal);
-}
-function protesFaltantes(kg, d, a, c) {
-  let p = protesDiarias(kg);
-  if (d) p -= p * 0.3; if (a) p -= p * 0.4; if (c) p -= p * 0.3;
-  return Math.round(p);
-}
+function calDiarias(kg){if(kg<=5)return 500;if(kg<=10)return 700;if(kg<=15)return 1200;if(kg<=20)return 1600;if(kg<=30)return 1900;if(kg<=40)return 2200;if(kg<=50)return 2400;if(kg<=60)return 2600;if(kg<=70)return 2800;if(kg<=80)return 3000;if(kg<=90)return 3200;return 3400}
+function protDiarias(kg){if(kg<=5)return 10;if(kg<=10)return 15;if(kg<=15)return 25;if(kg<=20)return 35;if(kg<=30)return 45;if(kg<=40)return 55;if(kg<=50)return 65;if(kg<=60)return 75;if(kg<=70)return 85;if(kg<=80)return 95;if(kg<=90)return 105;return 110}
+function calFaltantes(kg,d,a,c){let v=calDiarias(kg);if(d)v-=v*0.3;if(a)v-=v*0.4;if(c)v-=v*0.3;return Math.round(v)}
+function protFaltantes(kg,d,a,c){let v=protDiarias(kg);if(d)v-=v*0.3;if(a)v-=v*0.4;if(c)v-=v*0.3;return Math.round(v)}
 
 function renderBeneficiarios() {
-  const el = document.getElementById('beneficiarios-list');
   const bens = responsableData.beneficiarios;
-  if (!bens.length) {
-    el.innerHTML = '<div class="empty-state"><div class="empty-icon">👥</div><div class="empty-text">No hay beneficiarios registrados</div></div>';
-    return;
-  }
-  el.innerHTML = `
-    <div class="card">
-      <div class="table-wrap">
-        <table>
-          <thead><tr>
-            <th>ID</th><th>Nombre</th><th>DNI</th><th>Edad</th><th>CSE</th><th>Plan Nutricional</th>
-          </tr></thead>
-          <tbody>
-            ${bens.map((b, i) => {
-              const cseColor = b.cse === 'PobreExtremo' ? 'badge-red' : 'badge-orange';
-              const cseLabel = b.cse === 'PobreExtremo' ? 'Pobre Extremo' : 'Pobre';
-              return `<tr>
-                <td>${b.id}</td>
-                <td><strong>${b.nombre}</strong></td>
-                <td>${b.dni}</td>
-                <td>${b.edad} años</td>
-                <td><span class="badge ${cseColor}">${cseLabel}</span></td>
-                <td><button class="btn btn-outline btn-sm" onclick="verPlan(${i})">Ver plan 📊</button></td>
-              </tr>`;
-            }).join('')}
-          </tbody>
-        </table>
-      </div>
-    </div>`;
+  const el = document.getElementById('beneficiarios-list');
+  if (!bens.length) { el.innerHTML='<div class="empty-state"><div class="empty-icon">👥</div><div class="empty-text">No hay beneficiarios registrados</div></div>'; return; }
+  el.innerHTML = `<div class="card"><div class="table-wrap"><table>
+    <thead><tr><th>ID</th><th>Nombre</th><th>DNI</th><th>Edad</th><th>CSE</th><th>Plan Nutricional</th></tr></thead>
+    <tbody>${bens.map((b,i)=>`<tr>
+      <td>${b.id}</td><td><strong>${b.nombre}</strong></td><td>${b.dni}</td><td>${b.edad} años</td>
+      <td><span class="badge ${b.cse==='PobreExtremo'?'badge-red':'badge-orange'}">${b.cse==='PobreExtremo'?'Pobre Extremo':'Pobre'}</span></td>
+      <td><button class="btn btn-outline btn-sm" onclick="verPlan(${i})">Ver plan 📊</button></td>
+    </tr>`).join('')}</tbody>
+  </table></div></div>`;
 }
 
 function verPlan(i) {
   const b = responsableData.beneficiarios[i];
   const p = b.plan;
-  const calTotal = caloriasDiarias(p.kg);
-  const protTotal = protesDiarias(p.kg);
-  const calFalt = caloriasFaltantes(p.kg, p.desayuno, p.almuerzo, p.cena);
-  const protFalt = protesFaltantes(p.kg, p.desayuno, p.almuerzo, p.cena);
-  const calPct = Math.round((1 - calFalt / calTotal) * 100);
-  const protPct = Math.round((1 - protFalt / protTotal) * 100);
-
+  const calT = calDiarias(p.kg), protT = protDiarias(p.kg);
+  const calF = calFaltantes(p.kg,p.desayuno,p.almuerzo,p.cena);
+  const protF = protFaltantes(p.kg,p.desayuno,p.almuerzo,p.cena);
+  const calPct = Math.round((1-calF/calT)*100);
+  const protPct = Math.round((1-protF/protT)*100);
   document.getElementById('plan-content').innerHTML = `
-    <div style="margin-bottom:20px">
-      <div style="font-size:18px;font-weight:700">${b.nombre}</div>
-      <div style="font-size:13px;color:var(--muted)">${b.id} · ${b.edad} años · ${p.kg} kg</div>
-    </div>
+    <div style="margin-bottom:20px"><div style="font-size:18px;font-weight:700">${b.nombre}</div>
+    <div style="font-size:13px;color:var(--muted)">${b.id} · ${b.edad} años · ${p.kg} kg</div></div>
     <div class="card" style="margin-bottom:16px">
       <div style="font-size:12px;color:var(--muted);margin-bottom:6px">CALORÍAS DIARIAS NECESARIAS</div>
-      <div style="font-size:28px;font-weight:800;color:var(--accent)">${calTotal} kcal</div>
+      <div style="font-size:28px;font-weight:800;color:var(--accent)">${calT} kcal</div>
       <div class="plan-bar"><div class="plan-bar-fill" style="width:${calPct}%"></div></div>
-      <div style="font-size:12px;color:var(--muted)">${calPct}% cubierto · Faltan <strong style="color:var(--warn)">${calFalt} kcal</strong></div>
+      <div style="font-size:12px;color:var(--muted)">${calPct}% cubierto · Faltan <strong style="color:var(--warn)">${calF} kcal</strong></div>
     </div>
     <div class="card" style="margin-bottom:16px">
       <div style="font-size:12px;color:var(--muted);margin-bottom:6px">PROTEÍNAS DIARIAS NECESARIAS</div>
-      <div style="font-size:28px;font-weight:800;color:var(--accent2)">${protTotal} g</div>
+      <div style="font-size:28px;font-weight:800;color:var(--accent2)">${protT} g</div>
       <div class="plan-bar"><div class="plan-bar-fill" style="width:${protPct}%"></div></div>
-      <div style="font-size:12px;color:var(--muted)">${protPct}% cubierto · Faltan <strong style="color:var(--warn)">${protFalt} g</strong></div>
+      <div style="font-size:12px;color:var(--muted)">${protPct}% cubierto · Faltan <strong style="color:var(--warn)">${protF} g</strong></div>
     </div>
     <div class="card">
       <div style="font-size:12px;color:var(--muted);margin-bottom:12px">COMIDAS CUBIERTAS</div>
       <div style="display:flex;gap:12px">
-        ${['Desayuno','Almuerzo','Cena'].map((c, idx) => {
-          const cubierto = [p.desayuno, p.almuerzo, p.cena][idx];
-          return `<div style="flex:1;text-align:center;padding:12px;border-radius:8px;background:${cubierto ? 'rgba(0,229,160,0.1)' : 'var(--surface2)'};border:1px solid ${cubierto ? 'rgba(0,229,160,0.3)' : 'var(--border)'}">
+        ${['Desayuno','Almuerzo','Cena'].map((c,idx)=>{
+          const ok=[p.desayuno,p.almuerzo,p.cena][idx];
+          return `<div style="flex:1;text-align:center;padding:12px;border-radius:8px;background:${ok?'rgba(0,229,160,0.1)':'var(--surface2)'};border:1px solid ${ok?'rgba(0,229,160,0.3)':'var(--border)'}">
             <div style="font-size:20px">${['🌅','☀️','🌙'][idx]}</div>
-            <div style="font-size:12px;margin-top:4px;color:${cubierto ? 'var(--accent)' : 'var(--muted)'}">${c}</div>
-            <div style="font-size:11px;color:${cubierto ? 'var(--accent)' : 'var(--muted)'}">${cubierto ? '✓ Cubierto' : '✗ Faltante'}</div>
+            <div style="font-size:12px;margin-top:4px;color:${ok?'var(--accent)':'var(--muted)'}">${c}</div>
+            <div style="font-size:11px;color:${ok?'var(--accent)':'var(--muted)'}">${ok?'✓ Cubierto':'✗ Faltante'}</div>
           </div>`;
         }).join('')}
       </div>
@@ -1536,170 +1077,225 @@ function verPlan(i) {
 }
 
 function registrarBeneficiario() {
-  const nombre = document.getElementById('ben-nombre').value.trim();
-  const dni = document.getElementById('ben-dni').value.trim();
-  const numero = parseInt(document.getElementById('ben-numero').value);
-  const edad = parseInt(document.getElementById('ben-edad').value);
-  const id = document.getElementById('ben-id').value.trim();
-  const cse = document.getElementById('ben-cse').value;
-  const kg = parseFloat(document.getElementById('ben-kg').value);
-  const desayuno = document.getElementById('ben-desayuno').checked;
-  const almuerzo = document.getElementById('ben-almuerzo').checked;
-  const cena = document.getElementById('ben-cena').checked;
+  const nombre=document.getElementById('ben-nombre').value.trim();
+  const dni=document.getElementById('ben-dni').value.trim();
+  const numero=parseInt(document.getElementById('ben-numero').value);
+  const edad=parseInt(document.getElementById('ben-edad').value);
+  const id=document.getElementById('ben-id').value.trim();
+  const cse=document.getElementById('ben-cse').value;
+  const kg=parseFloat(document.getElementById('ben-kg').value);
+  const desayuno=document.getElementById('ben-desayuno').checked;
+  const almuerzo=document.getElementById('ben-almuerzo').checked;
+  const cena=document.getElementById('ben-cena').checked;
+  if (!nombre||!dni||isNaN(edad)||!id||isNaN(kg)) { showError('modal-ben-error','Completa todos los campos.'); return; }
+  if (edad<0) { showError('modal-ben-error','Edad inválida.'); return; }
+  responsableData.beneficiarios.push({ nombre, dni, numero, edad, id, cse, plan:{kg,desayuno,almuerzo,cena} });
+  guardarDatos(); closeModal('modal-add-beneficiario'); renderBeneficiarios();
+}
 
-  if (!nombre || !dni || isNaN(edad) || !id || isNaN(kg)) {
-    showError('modal-ben-error', 'Completa todos los campos obligatorios.'); return;
+// ============================================================
+// RESPONSABLE — MENÚ DIARIO
+// ============================================================
+const CAL_POR_CAT = { PROTEINAS:200, LACTEO:150, CEREAL:300, TUBERCULO:200, VERDURA:50, FRUTA:80, GRASA:120, CONDIMENTO:20, LEGUMBRE:250 };
+const PROT_POR_CAT = { PROTEINAS:25, LACTEO:8, CEREAL:7, TUBERCULO:4, VERDURA:2, FRUTA:1, GRASA:1, CONDIMENTO:0, LEGUMBRE:15 };
+
+// Plantillas fijas por comida: nombre preferido (búsqueda parcial) + categoría de respaldo
+const PLANTILLA_DESAYUNO = [
+  { nombres: ['leche','lácteo','yogurt','queso'],  cat: 'LACTEO',   label: 'Lácteo'   },
+  { nombres: ['pan','trigo','avena','maíz','tostada'], cat: 'CEREAL',   label: 'Pan/Cereal' },
+  { nombres: ['huevo','pollo','atún','sardina'],   cat: 'PROTEINAS', label: 'Proteína' },
+  { nombres: ['manzana','plátano','naranja','fruta','mandarina'], cat: 'FRUTA', label: 'Fruta' },
+];
+const PLANTILLA_ALMUERZO = [
+  { nombres: ['arroz','fideo','macarrón','pasta'],  cat: 'CEREAL',    label: 'Arroz/Cereal' },
+  { nombres: ['pollo','carne','res','cerdo','pescado','atún','pavo'], cat: 'PROTEINAS', label: 'Proteína' },
+  { nombres: ['papa','camote','yuca','olluco'],      cat: 'TUBERCULO', label: 'Tubérculo'   },
+  { nombres: ['frijol','lenteja','garbanzo','arveja','menestra'], cat: 'LEGUMBRE', label: 'Menestra' },
+  { nombres: ['lechuga','tomate','zanahoria','ensalada','brócoli','espinaca'], cat: 'VERDURA', label: 'Ensalada' },
+];
+const PLANTILLA_CENA = [
+  { nombres: ['sopa','caldo','verdura','zapallo','acelga','espinaca','apio'], cat: 'VERDURA',   label: 'Verdura/Sopa' },
+  { nombres: ['papa','camote','yuca','chuño'],       cat: 'TUBERCULO', label: 'Tubérculo'  },
+  { nombres: ['pollo','huevo','atún','pavo','queso'], cat: 'PROTEINAS', label: 'Proteína ligera' },
+];
+
+// Busca el mejor lote para un slot: primero por nombre, luego por categoría
+function buscarLoteParaSlot(lotes, slot, yaUsados) {
+  const lotesOrdenados = [...lotes]
+    .filter(l => !yaUsados.has(l.idLote))
+    .sort((a,b) => new Date(a.fechaCaducidad) - new Date(b.fechaCaducidad));
+
+  // 1. Buscar por nombre exacto/parcial (insensible a mayúsculas)
+  for (const keyword of slot.nombres) {
+    const l = lotesOrdenados.find(x =>
+      x.alimento.nombre.toLowerCase().includes(keyword.toLowerCase())
+    );
+    if (l) return l;
   }
-  if (edad < 0) { showError('modal-ben-error', 'Edad inválida.'); return; }
+  // 2. Fallback: buscar por categoría
+  return lotesOrdenados.find(x => x.alimento.categoria === slot.cat) || null;
+}
 
-  responsableData.beneficiarios.push({ nombre, dni, numero, edad, id, cse, plan: { kg, desayuno, almuerzo, cena } });
-  guardarDatos();
-  closeModal('modal-add-beneficiario');
-  renderBeneficiarios();
+function seleccionarCombinacion(lotes, plantilla) {
+  const combinacion = [];
+  const yaUsados = new Set();
+  for (const slot of plantilla) {
+    const l = buscarLoteParaSlot(lotes, slot, yaUsados);
+    if (l) {
+      combinacion.push({ lote: l, label: slot.label });
+      yaUsados.add(l.idLote);
+    }
+  }
+  // Si no se encontró nada, usar los primeros disponibles
+  if (!combinacion.length) {
+    lotes.slice(0, 3).forEach(l => combinacion.push({ lote: l, label: l.alimento.categoria }));
+  }
+  return combinacion;
+}
+
+function calcularPorciones(bens, combinacion, pctCalorias) {
+  return bens.map(b => {
+    const p = b.plan;
+    const calTotal = calDiarias(p.kg);
+    const protTotal = protDiarias(p.kg);
+    const calNec = Math.round(calTotal * pctCalorias);
+    const protNec = Math.round(protTotal * pctCalorias);
+    const calPorAlim = combinacion.length ? calNec / combinacion.length : 0;
+    const items = combinacion.map(({lote, label}) => {
+      const cat = lote.alimento.categoria;
+      const calUnit = CAL_POR_CAT[cat] || 100;
+      const protUnit = PROT_POR_CAT[cat] || 0;
+      const cant = Math.max(1, Math.round(calPorAlim / calUnit));
+      return { nombre: lote.alimento.nombre, label, cantidad: cant, cal: cant*calUnit, prot: cant*protUnit };
+    });
+    return {
+      b, calNec, protNec,
+      totalCal: items.reduce((s,x)=>s+x.cal,0),
+      totalProt: items.reduce((s,x)=>s+x.prot,0),
+      items
+    };
+  });
+}
+
+function renderComida(titulo, emoji, pct, combinacion, porciones, colorAccent, yaCubiertos = []) {
+  const cubiertosHtml = yaCubiertos.length ? `
+    <div style="margin-bottom:16px;padding:10px 14px;background:rgba(107,122,153,0.08);border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--muted)">
+      ✓ Ya cubierto — no requieren ración: ${yaCubiertos.map(b=>`<strong style="color:var(--text)">${b.nombre}</strong>`).join(', ')}
+    </div>` : '';
+  const sinPorcionesHtml = !porciones.length ? `
+    <div style="text-align:center;padding:20px;color:var(--muted);font-size:13px">
+      Todos los beneficiarios ya tienen esta comida cubierta ✓
+    </div>` : '';
+  return `
+    <div class="card" style="margin-bottom:24px;border-color:${colorAccent}33">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+        <div style="font-size:28px">${emoji}</div>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;color:${colorAccent}">${titulo}</div>
+          <div style="font-size:12px;color:var(--muted)">${Math.round(pct*100)}% de las necesidades diarias · ${porciones.length} beneficiario${porciones.length!==1?'s':''} necesitan ración</div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Alimentos del menú</div>
+      <div class="menu-combinacion" style="margin-bottom:20px">
+        ${combinacion.map(({lote, label})=>`
+          <div class="menu-alimento-chip" style="border-color:${colorAccent}40;color:${colorAccent}">
+            ${lote.alimento.nombre}
+            <span style="opacity:0.55;font-weight:400;font-size:11px"> · ${label}</span>
+          </div>`).join('')}
+      </div>
+      ${cubiertosHtml}
+      <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Porciones por beneficiario</div>
+      ${sinPorcionesHtml}
+      ${porciones.map(({b,calNec,protNec,items,totalCal,totalProt})=>`
+        <div class="porcion-card" style="border-color:${colorAccent}22">
+          <div class="porcion-header">
+            <div>
+              <div class="porcion-nombre">${b.nombre}</div>
+              <div style="font-size:12px;color:var(--muted)">${b.id} · ${b.plan.kg} kg · necesita ~${calNec} kcal</div>
+            </div>
+            <div style="text-align:right;font-size:12px">
+              <div style="color:${colorAccent}">~${totalCal} kcal</div>
+              <div style="color:var(--accent2)">~${totalProt}g prot</div>
+            </div>
+          </div>
+          <div class="porcion-items">
+            ${items.map(it=>`<div class="porcion-item">
+              <span style="color:var(--muted);font-size:11px">${it.label}:</span>
+              <strong>${it.cantidad}</strong> u. de ${it.nombre}
+            </div>`).join('')}
+          </div>
+        </div>`).join('')}
+    </div>`;
+}
+
+function generarMenu() {
+  const lotes = responsableData.almacen.lotes.filter(l => l.stock > 0 && !isExpired(l.fechaCaducidad));
+  const bens = responsableData.beneficiarios;
+  const el = document.getElementById('menu-content');
+
+  if (!lotes.length) { el.innerHTML='<div class="empty-state"><div class="empty-icon">📦</div><div class="empty-text">No hay lotes disponibles en el almacén</div></div>'; return; }
+  if (!bens.length) { el.innerHTML='<div class="empty-state"><div class="empty-icon">👥</div><div class="empty-text">No hay beneficiarios registrados</div></div>'; return; }
+
+  // Combinaciones por comida usando plantillas fijas
+  const combDesayuno = seleccionarCombinacion(lotes, PLANTILLA_DESAYUNO);
+  const combAlmuerzo = seleccionarCombinacion(lotes, PLANTILLA_ALMUERZO);
+  const combCena     = seleccionarCombinacion(lotes, PLANTILLA_CENA);
+
+  // Porciones por comida (30% / 40% / 30% de calorías diarias)
+  const porcionesD = calcularPorciones(bens.filter(b => !b.plan.desayuno), combDesayuno, 0.30);
+  const porcionesA = calcularPorciones(bens.filter(b => !b.plan.almuerzo), combAlmuerzo, 0.40);
+  const porcionesC = calcularPorciones(bens.filter(b => !b.plan.cena),     combCena,     0.30);
+
+  const hoy = new Date().toLocaleDateString('es-PE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+  el.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800">Menú del día</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:2px">${hoy}</div>
+      </div>
+      <span class="badge badge-green">✓ Generado — ${bens.length} beneficiario${bens.length!==1?'s':''}</span>
+    </div>
+    ${renderComida('Desayuno', '🌅', 0.30, combDesayuno, porcionesD, '#00e5a0',  bens.filter(b => b.plan.desayuno))}
+    ${renderComida('Almuerzo', '☀️', 0.40, combAlmuerzo, porcionesA, '#0099ff', bens.filter(b => b.plan.almuerzo))}
+    ${renderComida('Cena',     '🌙', 0.30, combCena,     porcionesC, '#ff6b35', bens.filter(b => b.plan.cena))}
+  `;
+}
+
+function renderMenuPage() {
+  // Solo limpia si no hay contenido previo útil
+  const el = document.getElementById('menu-content');
+  if (el.innerHTML.trim() === '') {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">🍽️</div><div class="empty-text">Presiona "Generar menú de hoy" para calcular las porciones</div></div>';
+  }
 }
 
 // ============================================================
 // INNER TABS
 // ============================================================
 function switchInnerTab(section, tab) {
-  if (section === 'almacen') {
-    ['lotes-almacen', 'movimientos'].forEach(t => {
-      document.getElementById('sub-' + t).style.display = t === tab ? 'block' : 'none';
-    });
-  }
-  if (section === 'lotes-resp') {
-    ['donados', 'comprados'].forEach(t => {
-      document.getElementById('sub-' + t).style.display = t === tab ? 'block' : 'none';
-    });
-  }
-  const tabs = document.querySelectorAll(`#page-${section === 'almacen' ? 'almacen' : 'lotes-resp'} .inner-tab`);
-  tabs.forEach((t, i) => {
-    const tabNames = section === 'almacen' ? ['lotes-almacen','movimientos'] : ['donados','comprados'];
-    t.classList.toggle('active', tabNames[i] === tab);
-  });
+  const map = { almacen:['lotes-almacen','movimientos'], 'lotes-resp':['donados','comprados'] };
+  const tabs = map[section];
+  if (!tabs) return;
+  tabs.forEach(t => { document.getElementById('sub-'+t).style.display = t===tab?'block':'none'; });
+  const pageId = section === 'almacen' ? 'almacen' : 'lotes-resp';
+  document.querySelectorAll(`#page-${pageId} .inner-tab`).forEach((el,i) => el.classList.toggle('active', tabs[i]===tab));
 }
 
 // ============================================================
 // MODALS
 // ============================================================
-function openModal(id) {
-  document.getElementById(id).classList.add('open');
-}
+function openModal(id) { document.getElementById(id).classList.add('open'); }
 function closeModal(id) {
   document.getElementById(id).classList.remove('open');
-  document.querySelectorAll('.error-msg').forEach(e => e.style.display = 'none');
+  document.querySelectorAll('.error-msg,.success-msg').forEach(e=>e.style.display='none');
 }
 document.querySelectorAll('.modal-overlay').forEach(el => {
-  el.addEventListener('click', e => { if (e.target === el) closeModal(el.id); });
+  el.addEventListener('click', e => { if (e.target===el) closeModal(el.id); });
 });
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(m => closeModal(m.id));
+  if (e.key==='Escape') document.querySelectorAll('.modal-overlay.open').forEach(m=>closeModal(m.id));
 });
-
-// ============================================================
-// ADMIN — PANEL
-// ============================================================
-function renderAdminUsuarios() {
-  const total = usuarios.length;
-  const proveedores = usuarios.filter(u => u.rol === 'Proveedor').length;
-  const responsables = usuarios.filter(u => u.rol === 'Responsable').length;
-  document.getElementById('admin-stats').innerHTML = `
-    <div class="stat-card"><div class="stat-value">${total}</div><div class="stat-label">Usuarios totales</div></div>
-    <div class="stat-card"><div class="stat-value">${responsables}</div><div class="stat-label">Responsables</div></div>
-    <div class="stat-card"><div class="stat-value">${proveedores}</div><div class="stat-label">Proveedores</div></div>
-    <div class="stat-card"><div class="stat-value">${responsableData.beneficiarios.length}</div><div class="stat-label">Beneficiarios</div></div>
-  `;
-
-  const tbody = document.getElementById('admin-tabla-usuarios');
-  if (!usuarios.length) {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:32px">No hay usuarios registrados</td></tr>';
-    return;
-  }
-  tbody.innerHTML = usuarios.map((u, i) => {
-    const rolBadge = u.rol === 'Proveedor'
-      ? '<span class="badge badge-blue">Proveedor</span>'
-      : '<span class="badge badge-green">Responsable</span>';
-    const detalle = u.rol === 'Proveedor'
-      ? `Tipo: ${u.tipoRel} · Lotes: ${u.listaLotes?.length || 0} · Saldo: S/. ${u.cuentaBancaria?.saldo?.toFixed(2) || '0.00'}`
-      : '—';
-    return `<tr>
-      <td>${i + 1}</td>
-      <td><strong>${u.nombre}</strong></td>
-      <td>${u.dni}</td>
-      <td>${rolBadge}</td>
-      <td style="font-size:12px;color:var(--muted)">${detalle}</td>
-      <td><button class="btn btn-danger btn-sm" onclick="adminEliminarUsuario(${i})">🗑 Eliminar</button></td>
-    </tr>`;
-  }).join('');
-}
-
-function adminEliminarUsuario(i) {
-  if (!confirm(`¿Eliminar al usuario "${usuarios[i].nombre}"?`)) return;
-  usuarios.splice(i, 1);
-  guardarDatos();
-  renderAdminUsuarios();
-}
-
-function renderAdminLotes() {
-  // Lotes del almacén
-  const lotesAlmacen = responsableData.almacen.lotes;
-  const tbodyA = document.getElementById('admin-tabla-lotes-almacen');
-  if (!lotesAlmacen.length) {
-    tbodyA.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:24px">Sin lotes en almacén</td></tr>';
-  } else {
-    tbodyA.innerHTML = lotesAlmacen.map(l => {
-      let estado = '<span class="badge badge-green">OK</span>';
-      if (isExpired(l.fechaCaducidad)) estado = '<span class="badge badge-red">Vencido</span>';
-      else if (isExpiringSoon(l.fechaCaducidad)) estado = '<span class="badge badge-orange">Vence pronto</span>';
-      else if (isLowStock(l.stock)) estado = '<span class="badge badge-red">Stock bajo</span>';
-      return `<tr>
-        <td>#${l.idLote}</td><td>${l.alimento.nombre}</td>
-        <td><span class="badge badge-blue">${l.alimento.categoria}</span></td>
-        <td>${l.stock}</td><td>S/. ${l.precioUnitario.toFixed(2)}</td>
-        <td>${formatDate(l.fechaCaducidad)}</td><td>${estado}</td>
-      </tr>`;
-    }).join('');
-  }
-
-  // Lotes de proveedores
-  const tbodyP = document.getElementById('admin-tabla-lotes-prov');
-  const proveedores = usuarios.filter(u => u.rol === 'Proveedor');
-  const filas = [];
-  proveedores.forEach(p => {
-    (p.listaLotes || []).forEach(l => {
-      filas.push(`<tr>
-        <td>${p.nombre}</td><td>#${l.idLote}</td><td>${l.alimento.nombre}</td>
-        <td>${l.stock}</td><td>S/. ${l.precioUnitario.toFixed(2)}</td>
-        <td>${formatDate(l.fechaCaducidad)}</td>
-      </tr>`);
-    });
-  });
-  tbodyP.innerHTML = filas.length
-    ? filas.join('')
-    : '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:24px">Sin lotes de proveedores</td></tr>';
-}
-
-function renderAdminBeneficiarios() {
-  const bens = responsableData.beneficiarios;
-  const tbody = document.getElementById('admin-tabla-beneficiarios');
-  if (!bens.length) {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:32px">No hay beneficiarios registrados</td></tr>';
-    return;
-  }
-  tbody.innerHTML = bens.map(b => {
-    const comidas = [b.plan?.desayuno && 'Desayuno', b.plan?.almuerzo && 'Almuerzo', b.plan?.cena && 'Cena'].filter(Boolean).join(', ') || 'Ninguna';
-    const cseColor = b.cse === 'PobreExtremo' ? 'badge-red' : 'badge-orange';
-    return `<tr>
-      <td>${b.id}</td>
-      <td><strong>${b.nombre}</strong></td>
-      <td>${b.dni}</td>
-      <td>${b.edad} años</td>
-      <td><span class="badge ${cseColor}">${b.cse === 'PobreExtremo' ? 'Pobre Extremo' : 'Pobre'}</span></td>
-      <td>${b.plan?.kg || '—'} kg</td>
-      <td style="font-size:12px">${comidas}</td>
-    </tr>`;
-  }).join('');
-}
 </script>
 </body>
 </html>
