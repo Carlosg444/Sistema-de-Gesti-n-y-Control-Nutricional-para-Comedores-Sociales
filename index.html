@@ -640,6 +640,7 @@ function doLogout() {
 // APP INIT
 // ============================================================
 function initApp() {
+  if (!currentUser) currentUser = window.currentUser;
   document.getElementById('auth-screen').style.display = 'none';
   document.getElementById('app-screen').style.display = 'block';
   document.getElementById('user-name-display').textContent = currentUser.nombre;
@@ -1296,6 +1297,8 @@ document.querySelectorAll('.modal-overlay').forEach(el => {
 document.addEventListener('keydown', e => {
   if (e.key==='Escape') document.querySelectorAll('.modal-overlay.open').forEach(m=>closeModal(m.id));
 });
+
 </script>
+<script type="module" src="/src/interface/main.ts"></script>
 </body>
 </html>
