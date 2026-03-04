@@ -3,7 +3,6 @@ import { Usuario } from "./Usuario";
 import { LoteAlimento } from "./LoteAlimento";
 import { CuentaBancaria } from "./CuentaBancaria";
 import { Alerta } from "./Alerta";
-import { Almacen } from "../application/Almacen";
 import { Lotes } from "../application/Lotes";
 
 export class Proveedor extends Usuario {
@@ -38,7 +37,6 @@ export class Proveedor extends Usuario {
         return this.cuentaBancaria;
     }
 
-    // Dona el lote: lo saca de su lista y lo manda directo al almacén de la empresa
     public donarLote(lote: LoteAlimento, lotesEmpresa: Lotes): void {
         const idx = this.listaLotes.indexOf(lote);
         if (idx === -1) throw new Error("El lote no se encuentra en tu lista");
@@ -46,7 +44,6 @@ export class Proveedor extends Usuario {
         lotesEmpresa.agregarLoteDonado(lote);
     }
 
-    // Vende el lote: lo saca de su lista (el responsable lo compra desde Lotes)
     public venderLote(lote: LoteAlimento): LoteAlimento {
         const idx = this.listaLotes.indexOf(lote);
         if (idx === -1) throw new Error("El lote no se encuentra en tu lista");
@@ -55,7 +52,6 @@ export class Proveedor extends Usuario {
         return lote;
     }
 
-    // ── Alertas propias del proveedor ────────────────────────
     public getAlertas(umbralStock: number = 10, diasVencimiento: number = 7): Alerta[] {
         return Alerta.generarAlertas(this.listaLotes, umbralStock, diasVencimiento);
     }

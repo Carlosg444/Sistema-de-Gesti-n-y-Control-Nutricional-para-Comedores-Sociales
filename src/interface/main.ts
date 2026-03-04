@@ -1,7 +1,3 @@
-// ============================================================
-// interface/main.ts - VERSIÓN CORREGIDA
-// ============================================================
-
 import { Alimento } from "../domain/Alimento";
 import { CategoriaAlimento } from "../domain/CategoriaAlimento";
 import { Cse } from "../domain/Cse";
@@ -192,22 +188,15 @@ function generarMenuDOM(): void {
   }
 }
 
-// ============================================================
-// SETUP
-// ============================================================
+
 document.addEventListener("DOMContentLoaded", () => {
-  // Exponer estado al HTML ANTES de que el HTML lo use
   (window as any).usuarios        = estado.usuarios;
   (window as any).cuentaEmpresa   = estado.cuentaEmpresa;
   (window as any).responsableData = estado.responsableData;
-
-  // Sobreescribir funciones con versiones del dominio TS
   (window as any).registrarDonativo     = registrarDonativoDOM;
   (window as any).agregarLote           = agregarLoteDOM;
   (window as any).registrarBeneficiario = registrarBeneficiarioDOM;
   (window as any).generarMenu           = generarMenuDOM;
-
-  // Sobreescribir doLogin para sincronizar estado
   (window as any).doLogin = function () {
     const dni  = (document.getElementById("login-dni") as HTMLInputElement).value.trim();
     const pass = (document.getElementById("login-pass") as HTMLInputElement).value;
@@ -222,7 +211,6 @@ document.addEventListener("DOMContentLoaded", () => {
     (window as any).initApp();
   };
 
-  // Sobreescribir resetear
   (window as any).resetearDatos = function () {
     if (!confirm("¿Resetear todos los datos?")) return;
     ["nutri_usuarios","nutri_cuenta","nutri_resp"].forEach(k => localStorage.removeItem(k));

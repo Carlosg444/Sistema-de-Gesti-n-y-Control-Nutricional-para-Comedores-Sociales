@@ -1,9 +1,3 @@
-// ============================================================
-// infrastructure/RepositorioLocalStorage.ts
-// Maneja toda la persistencia en localStorage.
-// Reemplaza el manejo directo de localStorage en el HTML.
-// ============================================================
-
 import { Alimento } from "../domain/Alimento";
 import { CategoriaAlimento } from "../domain/CategoriaAlimento";
 import { Cse } from "../domain/Cse";
@@ -15,8 +9,6 @@ import { MovimientoAlmacen } from "../domain/MovimientoAlmacen";
 import { TipoMovimiento } from "../domain/TipoMovimiento";
 import { CuentaBancaria } from "../domain/CuentaBancaria";
 import { CuentaEmpresa } from "../domain/CuentaEmpresa";
-
-// ── Tipos planos para serialización ──────────────────────────
 
 export interface LotePlano {
   idLote: number;
@@ -73,7 +65,6 @@ export interface EstadoApp {
   };
 }
 
-// ── Claves de localStorage ────────────────────────────────────
 
 const KEYS = {
   USUARIOS: "nutri_usuarios",
@@ -81,7 +72,6 @@ const KEYS = {
   RESP: "nutri_resp",
 } as const;
 
-// ── Conversores: plano ↔ dominio ──────────────────────────────
 
 export function loteDesdeJSON(l: LotePlano): LoteAlimento {
   const alimento = new Alimento(l.alimento.nombre, l.alimento.categoria as CategoriaAlimento);

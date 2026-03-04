@@ -1,8 +1,8 @@
 import { LoteAlimento } from "./LoteAlimento";
 
 export enum TipoAlerta {
-    StockBajo = "STOCK_BAJO",
-    VencimientoProximo = "VENCIMIENTO_PROXIMO"
+    StockBajo,
+    VencimientoProximo
 }
 
 export class Alerta {
@@ -33,11 +33,10 @@ export class Alerta {
     }
 
     public toString(): string {
-        const tipo = this.tipo === TipoAlerta.StockBajo ? "⚠️ Stock Bajo" : "⏰ Vencimiento Próximo";
+        const tipo = this.tipo === TipoAlerta.StockBajo ? "Stock Bajo" : "Vencimiento Proximo";
         return `[${tipo}] ${this.mensaje}`;
     }
 
-    // Genera alertas revisando todos los lotes del almacén
     public static generarAlertas(
         lotes: LoteAlimento[],
         umbralStock: number = 10,

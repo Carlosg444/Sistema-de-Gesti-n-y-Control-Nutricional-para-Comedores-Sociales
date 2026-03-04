@@ -10,7 +10,6 @@ import { Alerta } from "./Alerta";
 import { MenuDiario, MenuDia } from "./MenuDiario";
 
 export class Responsable extends Usuario {
-    // Recursos compartidos entre todos los responsables (estáticos)
     private static almacenEmpresa: Almacen;
     private static lotesEmpresa: Lotes;
     private static beneficiariosEmpresa: Beneficiario[] = [];
@@ -21,13 +20,11 @@ export class Responsable extends Usuario {
         super(nombre, dni, RolUsuario.Responsable, "");
     }
 
-    // Inicializar los recursos compartidos (llamar una sola vez al inicio)
     public static inicializar(almacen: Almacen, lotes: Lotes): void {
         Responsable.almacenEmpresa = almacen;
         Responsable.lotesEmpresa = lotes;
     }
 
-    // ── Almacén ──────────────────────────────────────────────
     public getAlmacen(): Almacen {
         return Responsable.almacenEmpresa;
     }
@@ -36,12 +33,10 @@ export class Responsable extends Usuario {
         return Responsable.lotesEmpresa;
     }
 
-    // ── Cuenta empresa ───────────────────────────────────────
     public getCuentaEmpresa(): CuentaEmpresa {
         return CuentaEmpresa.getInstance();
     }
 
-    // ── Donativos ────────────────────────────────────────────
     public registrarDonativo(nombreDonante: string, monto: number): Donativo {
         const donativo = new Donativo(nombreDonante, monto);
         Responsable.donativosEmpresa.push(donativo);
@@ -52,7 +47,6 @@ export class Responsable extends Usuario {
         return Responsable.donativosEmpresa;
     }
 
-    // ── Beneficiarios ────────────────────────────────────────
     public registrarBeneficiario(beneficiario: Beneficiario, plan: PlanNutricional): void {
         Responsable.beneficiariosEmpresa.push(beneficiario);
         Responsable.planesNutricionales.set(beneficiario.getId(), plan);
@@ -70,7 +64,6 @@ export class Responsable extends Usuario {
         return Responsable.planesNutricionales;
     }
 
-    // ── Alertas ──────────────────────────────────────────────
     public getAlertas(umbralStock: number = 10, diasVencimiento: number = 7): Alerta[] {
         return Alerta.generarAlertas(
             Responsable.almacenEmpresa.getLotes(),
@@ -79,7 +72,6 @@ export class Responsable extends Usuario {
         );
     }
 
-    // ── Menú diario ──────────────────────────────────────────
     public generarMenuDiario(): MenuDia {
         return MenuDiario.generarMenu(
             Responsable.almacenEmpresa.getLotes(),
@@ -88,7 +80,6 @@ export class Responsable extends Usuario {
         );
     }
 
-    // ── Comprar lote ─────────────────────────────────────────
     public comprarLote(lote: import("./LoteAlimento").LoteAlimento): void {
         Responsable.lotesEmpresa.comprarLote(lote);
     }
